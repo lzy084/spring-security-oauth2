@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="view/shard/head::head(~{})">
+    <meta charset="UTF-8">
+    <title>title</title>
+</head>
+
+<body>
+
+
+<footer th:replace="view/shard/foot::foot(~{::script})">
+    <script type="text/javascript" th:inline="javascript">
+    </script>
+</footer>
+</body>
+</html>

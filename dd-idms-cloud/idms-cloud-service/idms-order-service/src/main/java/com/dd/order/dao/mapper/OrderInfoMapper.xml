@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dd.order.dao.OrderInfoMapper">
+
+    <resultMap id="orderInfoResultMap" type="com.dd.order.entity.OrderInfo">
+        <id column="orderId" property="orderId"/> 
+        <result column="goodsId" property="goodsId"/> 
+        <result column="userId" property="userId"/> 
+        <result column="createTime" property="createTime"/> 
+        <result column="goodsUnm" property="goodsUnm"/> 
+
+        
+        
+    </resultMap>
+
+    <sql id="orderInfoColumns">
+        `order_info`.`order_id` AS `orderId`,
+        `order_info`.`goods_id` AS `goodsId`,
+        `order_info`.`user_id` AS `userId`,
+        `order_info`.`create_time` AS `createTime`,
+        `order_info`.`goods_unm` AS `goodsUnm`
+    </sql>
+
+    <sql id="orderInfoJoins">
+        
+    </sql>
+
+    <select id="get" resultMap="orderInfoResultMap">
+        SELECT
+        <include refid="orderInfoColumns" />
+        FROM `order_info` <include refid="orderInfoJoins" />
+        <where>
+        `order_info`.`order_id` = #{id}
+        </where>
+    </select>
+
+
+    <select id="findAllList" resultMap="orderInfoResultMap">
+        SELECT
+        <include refid="orderInfoColumns" />
+        FROM `order_info` <include refid="orderInfoJoins" />
+        <where>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `order_info`(
+            `order_id`,
+            `goods_id`,
+            `user_id`,
+            `create_time`,
+            `goods_unm`
+        )
+        VALUES (
+            #{orderId},
+            #{goodsId},
+            #{userId},
+            #{createTime},
+            #{goodsUnm}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO `order_info`(
+            `order_id`,
+            `goods_id`,
+            `user_id`,
+            `create_time`,
+            `goods_unm`
+        )
+        VALUES
+        <foreach collection ="list" item="orderInfo" separator =",">
+        (
+            #{orderInfo.orderId},
+            #{orderInfo.goodsId},
+            #{orderInfo.userId},
+            #{orderInfo.createTime},
+            #{orderInfo.goodsUnm}
+        )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `order_info`
+        <set>
+                <if test= "goodsId!=null and goodsId !=''"> 
+         `goods_id` = #{goodsId},
+        </if>
+        <if test= "userId!=null and userId !=''"> 
+         `user_id` = #{userId},
+        </if>
+        <if test= "createTime!=null and createTime !=''"> 
+         `create_time` = #{createTime},
+        </if>
+        <if test= "goodsUnm!=null and goodsUnm !=''"> 
+         `goods_unm` = #{goodsUnm}
+        </if>
+      </set>
+        WHERE `order_id` = #{orderId}
+    </update>
+
+    <delete id="delete">
+        delete from `order_info`
+        WHERE `order_id` = #{orderId}
+    </delete>
+
+</mapper>

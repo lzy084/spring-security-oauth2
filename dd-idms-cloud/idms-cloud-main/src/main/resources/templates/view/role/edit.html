@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="view/shard/head::head(~{})">
+    <meta charset="UTF-8">
+    <title>title</title>
+</head>
+
+<body class="layuimini-container">
+
+<div class="layui-form layuimini-form" style="margin-top: 10px">
+    <div class="layuimini-container ">
+        <input type="hidden" th:value="${role.roleId}" name="roleId"/>
+        <div class="layuimini-main">
+            <div class="layui-form layuimini-form">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label required"><label style="color: red">*</label>角色名</label>
+                        <div class="layui-input-inline">
+                            <input lay-verify="required" lay-reqtext="角色名不能为空" type="text" name="roleName"
+                                   autocomplete="off" th:value="${role.roleName}" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label required" style="width: 150px"><label
+                                style="color: red">*</label>角色代码</label>
+                        <div class="layui-input-inline">
+                            <input lay-verify="required" lay-reqtext="角色代码不能为空" type="text" name="roleCode"
+                                   th:value="${role.roleCode}" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label required" style="width: 150px">角色类型</label>
+                        <div class="layui-input-inline">
+                            <select name="roleType">
+                                <option th:selected="${role.roleType eq 0}"  value="0"  >系统角色</option>
+                                <option th:selected="${role.roleType eq 1}"   value="1" >其他角色</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="layui-form-item" style="float: right;margin-right: 15px;margin-top: 15px">
+            <button class="layui-btn layui-btn-normal layui-btn-34" lay-submit lay-filter="saveBtn">提交</button>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="view/shard/foot::foot(~{::script})">
+    <script type="text/javascript" th:inline="javascript">
+        layui.use(["form"], function () {
+            console.log("ctxPath",ctxPath);
+            var form = layui.form;
+            form.on("submit(saveBtn)", function (data) {
+                var role=data.field;
+                role.roleType=parseInt(role.roleType);
+                $.ajax({
+                    type:"post",
+                    dataType:"json",
+                    contentType: "application/json;charset=utf-8",
+                    data:JSON.stringify(role),
+                    url:ctxPath+"role/update",
+                    success:function (result) {
+                        if(result.success){
+                            parent.refresh();
+                            var iframeIndex = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(iframeIndex);
+                        }
+                    }
+                })
+            })
+        })
+
+    </script>
+</footer>
+</body>
+</html>

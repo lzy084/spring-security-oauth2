@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dd.admin.dao.SysRoleMapper">
+
+    <resultMap id="sysRoleResultMap" type="com.dd.model.user.SysRole">
+        <id column="roleId" property="roleId"/> 
+        <result column="orgId" property="orgId"/> 
+        <result column="roleName" property="roleName"/> 
+        <result column="roleCode" property="roleCode"/> 
+        <result column="roleType" property="roleType"/> 
+        <result column="remarks" property="remarks"/> 
+        <result column="tenantId" property="tenantId"/> 
+        <result column="creator" property="creator"/> 
+        <result column="createDate" property="createDate"/>
+    </resultMap>
+
+    <sql id="sysRoleColumns">
+        `sys_role`.`role_id` AS `roleId`,
+        `sys_role`.`org_id` AS `orgId`,
+        `sys_role`.`role_name` AS `roleName`,
+        `sys_role`.`role_code` AS `roleCode`,
+        `sys_role`.`role_type` AS `roleType`,
+        `sys_role`.`remarks` AS `remarks`,
+        `sys_role`.`tenant_id` AS `tenantId`,
+        `sys_role`.`creator` AS `creator`,
+        `sys_role`.`create_date` AS `createDate`
+    </sql>
+
+    <sql id="sysRoleJoins">
+        
+    </sql>
+
+    <select id="get" resultMap="sysRoleResultMap">
+        SELECT
+        <include refid="sysRoleColumns" />
+        FROM `sys_role` <include refid="sysRoleJoins" />
+        <where>
+        `sys_role`.`role_id` = #{id}
+        </where>
+    </select>
+
+
+    <select id="findAllList" resultMap="sysRoleResultMap">
+        SELECT
+        <include refid="sysRoleColumns" />
+        FROM `sys_role` <include refid="sysRoleJoins" />
+        <where>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `sys_role`(
+            `role_id`,
+            `org_id`,
+            `role_name`,
+            `role_code`,
+            `role_type`,
+            `remarks`,
+            `tenant_id`,
+            `creator`,
+            `create_date`
+        )
+        VALUES (
+            #{roleId},
+            #{orgId},
+            #{roleName},
+            #{roleCode},
+            #{roleType},
+            #{remarks},
+            #{tenantId},
+            #{creator},
+            #{createDate}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO `sys_role`(
+            `role_id`,
+            `org_id`,
+            `role_name`,
+            `role_code`,
+            `role_type`,
+            `remarks`,
+            `tenant_id`,
+            `creator`,
+            `create_date`
+        )
+        VALUES
+        <foreach collection ="list" item="sysRole" separator =",">
+        (
+            #{sysRole.roleId},
+            #{sysRole.orgId},
+            #{sysRole.roleName},
+            #{sysRole.roleCode},
+            #{sysRole.roleType},
+            #{sysRole.remarks},
+            #{sysRole.tenantId},
+            #{sysRole.creator},
+            #{sysRole.createDate}
+        )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `sys_role`
+        <set>
+                <if test= "orgId!=null and orgId !=''"> 
+         `org_id` = #{orgId},
+        </if>
+        <if test= "roleName!=null and roleName !=''"> 
+         `role_name` = #{roleName},
+        </if>
+        <if test= "roleCode!=null and roleCode !=''"> 
+         `role_code` = #{roleCode},
+        </if>
+        <if test= "roleType!=null and roleType !=''"> 
+         `role_type` = #{roleType},
+        </if>
+        <if test= "remarks!=null and remarks !=''"> 
+         `remarks` = #{remarks},
+        </if>
+        <if test= "tenantId!=null and tenantId !=''"> 
+         `tenant_id` = #{tenantId},
+        </if>
+        <if test= "creator!=null and creator !=''"> 
+         `creator` = #{creator},
+        </if>
+        <if test= "createDate!=null and createDate !=''"> 
+         `create_date` = #{createDate}
+        </if>
+      </set>
+        WHERE `role_id` = #{roleId}
+    </update>
+
+    <delete id="delete">
+        delete from `sys_role`
+        WHERE `role_id` = #{roleId}
+    </delete>
+
+</mapper>

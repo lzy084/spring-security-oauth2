@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dd.oauth.server.principal.dao.SecurityUserInfoMapper">
+
+    <resultMap id="sysAccountResultMap" type="com.dd.oauth.server.principal.entity.SecurityUserInfo">
+        <id column="accountId" property="accountId"/>
+        <result column="userId" property="userId"/>
+        <result column="accountType" property="accountType"/>
+        <result column="accountName" property="accountName"/>
+        <result column="accountPwd" property="accountPwd"/>
+        <result column="tenantId" property="tenantId"/>
+        <result column="status" property="status"/>
+        <result column="loginCount" property="loginCount"/>
+        <result column="locked" property="locked"/>
+        <result column="loginIp" property="loginIp"/>
+        <result column="lastLogin" property="lastLogin"/>
+        <result column="domain" property="domain"/>
+        <result column="creator" property="creator"/>
+        <result column="createDate" property="createDate"/>
+        <association property="sysUser" javaType="com.dd.model.user.SysUser">
+
+            <id column="sysUser.userId" property="userId"/>
+            <result column="sysUser.userNo" property="userNo"/>
+            <result column="sysUser.userName" property="userName"/>
+            <result column="sysUser.email" property="email"/>
+            <result column="sysUser.phone" property="phone"/>
+            <result column="sysUser.photo" property="photo"/>
+            <result column="sysUser.remarks" property="remarks"/>
+            <result column="sysUser.currentAddress" property="currentAddress"/>
+            <result column="sysUser.residentAddress" property="residentAddress"/>
+            <result column="sysUser.nation" property="nation"/>
+            <result column="sysUser.politicalStatus" property="politicalStatus"/>
+            <result column="sysUser.graduateInstitutions" property="graduateInstitutions"/>
+            <result column="sysUser.birthday" property="birthday"/>
+            <result column="sysUser.cardNo" property="cardNo"/>
+            <result column="sysUser.marriageStatus" property="marriageStatus"/>
+            <result column="sysUser.entryDate" property="entryDate"/>
+            <result column="sysUser.dimissionDate" property="dimissionDate"/>
+            <result column="sysUser.education" property="education"/>
+            <result column="sysUser.gender" property="gender"/>
+            <result column="sysUser.nativePlace" property="nativePlace"/>
+            <result column="sysUser.duty" property="duty"/>
+            <result column="sysUser.positionId" property="positionId"/>
+            <result column="sysUser.openBank" property="openBank"/>
+            <result column="sysUser.openBankAddress" property="openBankAddress"/>
+            <result column="sysUser.openBankNumber" property="openBankNumber"/>
+            <result column="sysUser.deleted" property="deleted"/>
+            <result column="sysUser.tenantId" property="tenantId"/>
+            <result column="sysUser.professionalRanks" property="professionalRanks"/>
+            <result column="sysUser.userType" property="userType"/>
+            <result column="sysUser.residentType" property="residentType"/>
+            <result column="sysUser.lastDimissionDate" property="lastDimissionDate"/>
+            <result column="sysUser.clientId" property="clientId"/>
+            <result column="sysUser.sort" property="sort"/>
+            <result column="sysUser.creator" property="creator"/>
+            <result column="sysUser.createDate" property="createDate"/>
+        </association>
+    </resultMap>
+
+    <sql id="sysAccountColumns">
+        `sys_account`.`account_id`          AS `accountId`,
+        `sys_account`.`account_type`        AS `accountType`,
+        `sys_account`.`account_name`        AS `accountName`,
+        `sys_account`.`account_pwd`         AS `accountPwd`,
+        `sys_account`.`status`              AS `status`,
+        `sys_account`.`login_count`         AS `loginCount`,
+        `sys_account`.`locked`              AS `locked`,
+        `sys_account`.`login_ip`            AS `loginIp`,
+        `sys_account`.`last_login`          AS `lastLogin`,
+        `sys_account`.`domain`              AS `domain`,
+        `sys_account`.`create_date`         AS `createDate`,
+        `sys_user`.`user_id` AS `sysUser.userId`,
+        `sys_user`.`user_no` AS `sysUser.userNo`,
+        `sys_user`.`user_name` AS `sysUser.userName`,
+        `sys_user`.`email` AS `sysUser.email`,
+        `sys_user`.`phone` AS `sysUser.phone`,
+        `sys_user`.`photo` AS `sysUser.photo`,
+        `sys_user`.`remarks` AS `sysUser.remarks`,
+        `sys_user`.`current_address` AS `sysUser.currentAddress`,
+        `sys_user`.`resident_address` AS `sysUser.residentAddress`,
+        `sys_user`.`nation` AS `sysUser.nation`,
+        `sys_user`.`political_status` AS `sysUser.politicalStatus`,
+        `sys_user`.`graduate_institutions` AS `sysUser.graduateInstitutions`,
+        `sys_user`.`birthday` AS `sysUser.birthday`,
+        `sys_user`.`card_no` AS `sysUser.cardNo`,
+        `sys_user`.`marriage_status` AS `sysUser.marriageStatus`,
+        `sys_user`.`entry_date` AS `sysUser.entryDate`,
+        `sys_user`.`dimission_date` AS `sysUser.dimissionDate`,
+        `sys_user`.`education` AS `sysUser.education`,
+        `sys_user`.`gender` AS `sysUser.gender`,
+        `sys_user`.`native_place` AS `sysUser.nativePlace`,
+        `sys_user`.`duty` AS `sysUser.duty`,
+        `sys_user`.`position_id` AS `sysUser.positionId`,
+        `sys_user`.`open_bank` AS `sysUser.openBank`,
+        `sys_user`.`open_bank_address` AS `sysUser.openBankAddress`,
+        `sys_user`.`open_bank_number` AS `sysUser.openBankNumber`,
+        `sys_user`.`deleted` AS `sysUser.deleted`,
+        `sys_user`.`tenant_id` AS `sysUser.tenantId`,
+        `sys_user`.`professional_ranks` AS `sysUser.professionalRanks`,
+        `sys_user`.`user_type` AS `sysUser.userType`,
+        `sys_user`.`resident_type` AS `sysUser.residentType`,
+        `sys_user`.`last_dimission_date` AS `sysUser.lastDimissionDate`,
+        `sys_user`.`client_id` AS `sysUser.clientId`,
+        `sys_user`.`sort` AS `sysUser.sort`,
+        `sys_user`.`creator` AS `sysUser.creator`,
+        `sys_user`.`create_date` AS `sysUser.createDate`
+    </sql>
+    <sql id="innerJoin">
+          INNER JOIN `sys_user` ON `sys_account`.`user_id`=`sys_user`.`user_id`
+    </sql>
+
+    <select id="get" resultMap="sysAccountResultMap">
+        SELECT
+        <include refid="sysAccountColumns"/>
+        FROM `sys_account`
+        <include refid="innerJoin"/>
+        <where>
+            `sys_account`.`account_id` = #{id}
+        </where>
+    </select>
+    <select id="findByUserName" resultMap="sysAccountResultMap">
+        SELECT
+        <include refid="sysAccountColumns"/>
+        FROM `sys_account`
+        <include refid="innerJoin"/>
+        <where>
+            `sys_account`.`account_name` = #{username}
+        </where>
+    </select>
+
+    <select id="findAllList" resultMap="sysAccountResultMap">
+        SELECT
+        <include refid="sysAccountColumns"/>
+        FROM `sys_account`
+        <include refid="innerJoin"/>
+        <where>
+        </where>
+    </select>
+    <select id="queryAuthorities" resultType="java.lang.String">
+        SELECT
+           m.`permission`
+        FROM sys_user u
+                 INNER JOIN sys_user_role ru  ON ru.`user_id`=u.`user_id`
+                 INNER JOIN sys_role r ON r.`role_id`=ru.`role_id`
+                 INNER JOIN sys_role_menu rm ON ru.`role_id`=rm.`role_id`
+                 INNER JOIN sys_menu m ON m.`menu_id`=rm.`menu_id`
+                WHERE u.`user_id`=#{userId} and m.`permission` IS NOT NULL
+         GROUP BY  m.`permission`
+         UNION
+         SELECT
+            r.role_code permission
+         FROM sys_user u
+         INNER JOIN sys_user_role ru ON ru.`user_id`=u.`user_id`
+         INNER JOIN sys_role r ON ru.`role_id`=r.`role_id`
+         WHERE u.`user_id`=#{userId}
+         GROUP BY r.role_code
+    </select>
+    <insert id="insert">
+        INSERT INTO `sys_account`(
+            `account_id`,
+            `user_id`,
+            `account_type`,
+            `account_name`,
+            `account_pwd`,
+            `status`,
+            `login_count`,
+            `locked`,
+            `login_ip`,
+            `last_login_time`,
+            `domain`,
+            `create_date`,
+            `disabled`
+        )
+        VALUES (
+            #{accountId},
+            #{userId},
+            #{accountType},
+            #{accountName},
+            #{accountPwd},
+            #{status},
+            #{loginCount},
+            #{locked},
+            #{loginIp},
+            #{lastLoginTime},
+            #{domain},
+            #{createDate},
+            #{disabled}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO `sys_account`(
+        `account_id`,
+        `user_id`,
+        `account_type`,
+        `account_name`,
+        `account_pwd`,
+        `status`,
+        `login_count`,
+        `locked`,
+        `login_ip`,
+        `last_login_time`,
+        `domain`,
+        `create_date`,
+        `disabled`
+        )
+        VALUES
+        <foreach collection="list" item="sysAccount" separator=",">
+            (
+            #{sysAccount.accountId},
+            #{sysAccount.userId},
+            #{sysAccount.accountType},
+            #{sysAccount.accountName},
+            #{sysAccount.accountPwd},
+            #{sysAccount.status},
+            #{sysAccount.loginCount},
+            #{sysAccount.locked},
+            #{sysAccount.loginIp},
+            #{sysAccount.lastLoginTime},
+            #{sysAccount.domain},
+            #{sysAccount.createDate},
+            #{sysAccount.disabled}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `sys_account`
+        <set>
+            <if test="userId!=null and userId !=''">
+                `user_id` = #{userId},
+            </if>
+            <if test="accountType!=null and accountType !=''">
+                `account_type` = #{accountType},
+            </if>
+            <if test="accountName!=null and accountName !=''">
+                `account_name` = #{accountName},
+            </if>
+            <if test="accountPwd!=null and accountPwd !=''">
+                `account_pwd` = #{accountPwd},
+            </if>
+            <if test="status!=null and status !=''">
+                `status` = #{status},
+            </if>
+            <if test="loginCount!=null and loginCount !=''">
+                `login_count` = #{loginCount},
+            </if>
+            <if test="locked!=null and locked !=''">
+                `locked` = #{locked},
+            </if>
+            <if test="loginIp!=null and loginIp !=''">
+                `login_ip` = #{loginIp},
+            </if>
+            <if test="lastLoginTime!=null and lastLoginTime !=''">
+                `last_login_time` = #{lastLoginTime},
+            </if>
+            <if test="domain!=null and domain !=''">
+                `domain` = #{domain},
+            </if>
+            <if test="createDate!=null and createDate !=''">
+                `create_date` = #{createDate},
+            </if>
+            <if test="disabled!=null and disabled !=''">
+                `disabled` = #{disabled}
+            </if>
+        </set>
+        WHERE `account_id` = #{accountId}
+    </update>
+
+    <delete id="delete">
+        delete from `sys_account`
+        WHERE `account_id` = #{accountId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:fragment="head(link)">
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" th:href="@{/images/favicon.ico}">
+    <link rel="stylesheet" th:href="@{/lib/layui-v2.5.5/css/layui.css}" media="all" />
+    <link rel="stylesheet" th:href="@{/lib/css/layuimini.css}" media="all" />
+    <link rel="stylesheet" th:href="@{/lib/css/public.css}" media="all" />
+    <link rel="stylesheet" th:href="@{/lib/css/layout.css}" media="all" />
+    <link rel="stylesheet" th:href="@{/lib/css/themes/default.css}" media="all"/>
+    <link rel="stylesheet" th:href="@{/lib/font-awesome-4.7.0/css/font-awesome.min.css}" media="all" />
+    <link rel="stylesheet" th:href="@{/lib/bootstrap-3.3.7-dist/css/bootstrap.css}" media="all">
+    <link rel="stylesheet" th:href="@{/lib/bootstrap-3.3.7-dist/css/bootstrap-theme.css}" media="all" />
+    <link rel="stylesheet" th:href="@{/lib/bootstrap-table/bootstrap-table.css}" />
+    <th:block th:replace="${link}"></th:block>
+
+    <!--[if lt IE 9]>
+    <script th:src="@{/lib/html5.min.js}"></script>
+    <script th:src="@{/lib/respond.min.js}"></script>
+    <![endif]-->
+    <style id="layuimini-bg-color"></style>
+
+</head>
+</html>

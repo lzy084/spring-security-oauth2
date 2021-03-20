@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dd.admin.dao.SysDepartmentMapper">
+
+    <resultMap id="sysDepartmentResultMap" type="com.dd.model.user.SysDepartment">
+        <id column="departmentId" property="departmentId"/> 
+        <result column="orgId" property="orgId"/> 
+        <result column="departmentName" property="departmentName"/> 
+        <result column="parentId" property="parentId"/> 
+        <result column="parentIds" property="parentIds"/> 
+        <result column="departmentSort" property="departmentSort"/> 
+        <result column="areaId" property="areaId"/> 
+        <result column="departmentCode" property="departmentCode"/> 
+        <result column="departmentType" property="departmentType"/> 
+        <result column="grade" property="grade"/> 
+        <result column="address" property="address"/> 
+        <result column="zipCode" property="zipCode"/> 
+        <result column="phone" property="phone"/> 
+        <result column="fax" property="fax"/> 
+        <result column="email" property="email"/> 
+        <result column="enable" property="enable"/> 
+        <result column="primaryPerson" property="primaryPerson"/> 
+        <result column="deputyPerson" property="deputyPerson"/> 
+        <result column="remarks" property="remarks"/> 
+        <result column="delFlag" property="delFlag"/> 
+        <result column="creator" property="creator"/> 
+        <result column="createDate" property="createDate"/> 
+
+        
+        
+    </resultMap>
+
+    <sql id="sysDepartmentColumns">
+        `sys_department`.`department_id` AS `departmentId`,
+        `sys_department`.`org_id` AS `orgId`,
+        `sys_department`.`department_name` AS `departmentName`,
+        `sys_department`.`parent_id` AS `parentId`,
+        `sys_department`.`parent_ids` AS `parentIds`,
+        `sys_department`.`department_sort` AS `departmentSort`,
+        `sys_department`.`area_id` AS `areaId`,
+        `sys_department`.`department_code` AS `departmentCode`,
+        `sys_department`.`department_type` AS `departmentType`,
+        `sys_department`.`grade` AS `grade`,
+        `sys_department`.`address` AS `address`,
+        `sys_department`.`zip_code` AS `zipCode`,
+        `sys_department`.`phone` AS `phone`,
+        `sys_department`.`fax` AS `fax`,
+        `sys_department`.`email` AS `email`,
+        `sys_department`.`enable` AS `enable`,
+        `sys_department`.`primary_person` AS `primaryPerson`,
+        `sys_department`.`deputy_person` AS `deputyPerson`,
+        `sys_department`.`remarks` AS `remarks`,
+        `sys_department`.`del_flag` AS `delFlag`,
+        `sys_department`.`creator` AS `creator`,
+        `sys_department`.`create_date` AS `createDate`
+    </sql>
+
+    <sql id="sysDepartmentJoins">
+        
+    </sql>
+
+    <select id="get" resultMap="sysDepartmentResultMap">
+        SELECT
+        <include refid="sysDepartmentColumns" />
+        FROM `sys_department` <include refid="sysDepartmentJoins" />
+        <where>
+        `sys_department`.`department_id` = #{id}
+        </where>
+    </select>
+
+
+    <select id="findAllList" resultMap="sysDepartmentResultMap">
+        SELECT
+        <include refid="sysDepartmentColumns" />
+        FROM `sys_department` <include refid="sysDepartmentJoins" />
+        <where>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `sys_department`(
+            `department_id`,
+            `org_id`,
+            `department_name`,
+            `parent_id`,
+            `parent_ids`,
+            `department_sort`,
+            `area_id`,
+            `department_code`,
+            `department_type`,
+            `grade`,
+            `address`,
+            `zip_code`,
+            `phone`,
+            `fax`,
+            `email`,
+            `enable`,
+            `primary_person`,
+            `deputy_person`,
+            `remarks`,
+            `del_flag`,
+            `creator`,
+            `create_date`
+        )
+        VALUES (
+            #{departmentId},
+            #{orgId},
+            #{departmentName},
+            #{parentId},
+            #{parentIds},
+            #{departmentSort},
+            #{areaId},
+            #{departmentCode},
+            #{departmentType},
+            #{grade},
+            #{address},
+            #{zipCode},
+            #{phone},
+            #{fax},
+            #{email},
+            #{enable},
+            #{primaryPerson},
+            #{deputyPerson},
+            #{remarks},
+            #{delFlag},
+            #{creator},
+            #{createDate}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO `sys_department`(
+            `department_id`,
+            `org_id`,
+            `department_name`,
+            `parent_id`,
+            `parent_ids`,
+            `department_sort`,
+            `area_id`,
+            `department_code`,
+            `department_type`,
+            `grade`,
+            `address`,
+            `zip_code`,
+            `phone`,
+            `fax`,
+            `email`,
+            `enable`,
+            `primary_person`,
+            `deputy_person`,
+            `remarks`,
+            `del_flag`,
+            `creator`,
+            `create_date`
+        )
+        VALUES
+        <foreach collection ="list" item="sysDepartment" separator =",">
+        (
+            #{sysDepartment.departmentId},
+            #{sysDepartment.orgId},
+            #{sysDepartment.departmentName},
+            #{sysDepartment.parentId},
+            #{sysDepartment.parentIds},
+            #{sysDepartment.departmentSort},
+            #{sysDepartment.areaId},
+            #{sysDepartment.departmentCode},
+            #{sysDepartment.departmentType},
+            #{sysDepartment.grade},
+            #{sysDepartment.address},
+            #{sysDepartment.zipCode},
+            #{sysDepartment.phone},
+            #{sysDepartment.fax},
+            #{sysDepartment.email},
+            #{sysDepartment.enable},
+            #{sysDepartment.primaryPerson},
+            #{sysDepartment.deputyPerson},
+            #{sysDepartment.remarks},
+            #{sysDepartment.delFlag},
+            #{sysDepartment.creator},
+            #{sysDepartment.createDate}
+        )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `sys_department`
+        <set>
+                <if test= "orgId!=null and orgId !=''"> 
+         `org_id` = #{orgId},
+        </if>
+        <if test= "departmentName!=null and departmentName !=''"> 
+         `department_name` = #{departmentName},
+        </if>
+        <if test= "parentId!=null and parentId !=''"> 
+         `parent_id` = #{parentId},
+        </if>
+        <if test= "parentIds!=null and parentIds !=''"> 
+         `parent_ids` = #{parentIds},
+        </if>
+        <if test= "departmentSort!=null and departmentSort !=''"> 
+         `department_sort` = #{departmentSort},
+        </if>
+        <if test= "areaId!=null and areaId !=''"> 
+         `area_id` = #{areaId},
+        </if>
+        <if test= "departmentCode!=null and departmentCode !=''"> 
+         `department_code` = #{departmentCode},
+        </if>
+        <if test= "departmentType!=null and departmentType !=''"> 
+         `department_type` = #{departmentType},
+        </if>
+        <if test= "grade!=null and grade !=''"> 
+         `grade` = #{grade},
+        </if>
+        <if test= "address!=null and address !=''"> 
+         `address` = #{address},
+        </if>
+        <if test= "zipCode!=null and zipCode !=''"> 
+         `zip_code` = #{zipCode},
+        </if>
+        <if test= "phone!=null and phone !=''"> 
+         `phone` = #{phone},
+        </if>
+        <if test= "fax!=null and fax !=''"> 
+         `fax` = #{fax},
+        </if>
+        <if test= "email!=null and email !=''"> 
+         `email` = #{email},
+        </if>
+        <if test= "enable!=null and enable !=''"> 
+         `enable` = #{enable},
+        </if>
+        <if test= "primaryPerson!=null and primaryPerson !=''"> 
+         `primary_person` = #{primaryPerson},
+        </if>
+        <if test= "deputyPerson!=null and deputyPerson !=''"> 
+         `deputy_person` = #{deputyPerson},
+        </if>
+        <if test= "remarks!=null and remarks !=''"> 
+         `remarks` = #{remarks},
+        </if>
+        <if test= "delFlag!=null and delFlag !=''"> 
+         `del_flag` = #{delFlag},
+        </if>
+        <if test= "creator!=null and creator !=''"> 
+         `creator` = #{creator},
+        </if>
+        <if test= "createDate!=null and createDate !=''"> 
+         `create_date` = #{createDate}
+        </if>
+      </set>
+        WHERE `department_id` = #{departmentId}
+    </update>
+
+    <delete id="delete">
+        delete from `sys_department`
+        WHERE `department_id` = #{departmentId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dd.user.dao.SysUserRoleDao">
+
+    <resultMap id="sysUserRoleResultMap" type="com.dd.user.entity.UserRole">
+        <id column="roleId" property="roleId"/> 
+        <result column="userId" property="userId"/>
+    </resultMap>
+    <resultMap id="sysRoleResultMap" type="com.dd.user.entity.Role">
+        <id column="roleId" property="roleId"/>
+        <result column="roleName" property="roleName"/>
+        <result column="roleCode" property="roleCode"/>
+        <result column="roleType" property="roleType"/>
+        <collection property="menuList" ofType="com.dd.user.entity.Menu" column="roleId" select="com.dd.user.dao.RoleMenuDao.findMenuListByRoleId"></collection>
+    </resultMap>
+    <resultMap id="sysUserResultMap" type="com.dd.user.entity.UserInfo">
+        <id column="userId" property="userId"/>
+        <result column="userNo" property="userNo"/>
+        <result column="realName" property="realName"/>
+        <result column="userName" property="userName"/>
+        <result column="password" property="password"/>
+        <result column="email" property="email"/>
+        <result column="phone" property="phone"/>
+        <result column="gender" property="gender"/>
+        <result column="deleted" property="deleted"/>
+        <collection property="roleList" ofType="com.dd.user.entity.Role" column="userId" select="com.dd.user.dao.SysUserRoleDao.findRoleListByUserId"></collection>
+    </resultMap>
+    <select id="findUserListByRoleId" resultMap="sysUserResultMap">
+        SELECT
+            r.`role_id`,
+            u.`user_id` AS `userId`,
+            u.`user_no` AS `userNo`,
+            u.`real_name` AS `realName`,
+            u.`user_name` AS `userName`,
+            u.`password` AS `password`,
+            u.`email` AS `email`,
+            u.`phone` AS `phone`,
+            u.`gender` AS `gender`,
+            u.`deleted` AS `deleted`
+    FROM sys_role r
+        INNER JOIN sys_user_role ur ON ur.`role_id`=r.`role_id`
+        INNER JOIN sys_user u ON ur.`user_id`=u.`user_id`
+        WHERE r.`role_id`=#{roleId}
+    </select>
+    <select id="findRoleListByUserId" resultMap="sysRoleResultMap">
+     SELECT
+        u.`user_id` AS `userId`,
+        r.`role_id` AS `roleId`,
+        r.`role_name` AS `roleName`,
+        r.`role_code` AS `roleCode`,
+        r.`role_type` AS `roleType`
+    FROM
+        sys_user u
+    INNER JOIN sys_user_role ur ON u.`user_id` = ur.`user_id`
+    INNER JOIN sys_role r ON r.`role_id` = ur.`role_id`
+    WHERE u.`user_id` = #{userId}
+ </select>
+
+    <sql id="sysUserRoleColumns">
+        `sys_user_role`.`role_id` AS `roleId`,
+        `sys_user_role`.`user_id` AS `userId`
+    </sql>
+
+    <sql id="sysUserRoleJoins">
+        
+    </sql>
+
+    <select id="get" resultMap="sysUserRoleResultMap">
+        SELECT
+        <include refid="sysUserRoleColumns" />
+        FROM `sys_user_role` <include refid="sysUserRoleJoins" />
+        <where>
+        `sys_user_role`.`role_id` = #{id}
+        </where>
+    </select>
+
+
+    <select id="findAllList" resultMap="sysUserRoleResultMap">
+        SELECT
+        <include refid="sysUserRoleColumns" />
+        FROM `sys_user_role` <include refid="sysUserRoleJoins" />
+        <where>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `sys_user_role`(
+            `role_id`,
+            `user_id`
+        )
+        VALUES (
+            #{roleId},
+            #{userId}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO `sys_user_role`(
+            `role_id`,
+            `user_id`
+        )
+        VALUES
+        <foreach collection ="list" item="sysUserRole" separator =",">
+        (
+            #{sysUserRole.roleId},
+            #{sysUserRole.userId}
+        )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `sys_user_role`
+        <set>
+                <if test= "userId!=null and userId !=''"> 
+         `user_id` = #{userId}
+        </if>
+      </set>
+        WHERE `role_id` = #{roleId}
+    </update>
+
+    <delete id="delete">
+        delete from `sys_user_role`
+        WHERE `role_id` = #{roleId}
+    </delete>
+
+</mapper>

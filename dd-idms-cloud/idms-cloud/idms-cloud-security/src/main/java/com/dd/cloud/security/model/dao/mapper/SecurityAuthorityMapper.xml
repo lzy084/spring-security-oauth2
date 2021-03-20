@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dd.cloud.security.model.dao.SecurityAuthorityMapper">
+    <resultMap id="securityAuthorityResultMap" type=" com.dd.cloud.security.model.entity.SecurityAuthority">
+        <id column="menuId" property="menuId"/>
+        <result column="parentId" property="parentId"/>
+        <result column="parentIds" property="parentIds"/>
+        <result column="menuName" property="menuName"/>
+        <result column="menuSort" property="menuSort"/>
+        <result column="menuType" property="menuType"/>
+        <result column="permission" property="permission"/>
+        <result column="icon" property="icon"/>
+        <result column="action" property="action"/>
+        <result column="path" property="path"/>
+        <result column="target" property="target"/>
+        <result column="remarks" property="remarks"/>
+        <result column="status" property="status"/>
+        <result column="tenantId" property="tenantId"/>
+        <result column="registerFlag" property="registerFlag"/>
+        <result column="creator" property="creator"/>
+        <result column="createDate" property="createDate"/>
+    </resultMap>
+
+
+
+
+    <sql id="sysMenuColumns">
+        `sys_menu`.`menu_id` AS `menuId`,
+        `sys_menu`.`parent_id` AS `parentId`,
+        `sys_menu`.`parent_ids` AS `parentIds`,
+        `sys_menu`.`menu_name` AS `menuName`,
+        `sys_menu`.`menu_sort` AS `menuSort`,
+        `sys_menu`.`menu_type` AS `menuType`,
+        `sys_menu`.`permission` AS `permission`,
+        `sys_menu`.`icon` AS `icon`,
+        `sys_menu`.`action` AS `action`,
+        `sys_menu`.`path` AS `path`,
+        `sys_menu`.`target` AS `target`,
+        `sys_menu`.`remarks` AS `remarks`,
+        `sys_menu`.`status` AS `status`,
+        `sys_menu`.`tenant_id` AS `tenantId`,
+        `sys_menu`.`register_flag` AS `registerFlag`,
+        `sys_menu`.`creator` AS `creator`,
+        `sys_menu`.`create_date` AS `createDate`
+    </sql>
+
+    <sql id="sysMenuJoins">
+        
+    </sql>
+
+    <select id="get" resultMap="securityAuthorityResultMap">
+        SELECT
+        <include refid="sysMenuColumns" />
+        FROM `sys_menu` <include refid="sysMenuJoins" />
+        <where>
+        `sys_menu`.`id` = #{id}
+        </where>
+    </select>
+
+
+    <select id="findAllList" resultMap="securityAuthorityResultMap">
+        SELECT
+        <include refid="sysMenuColumns" />
+        FROM `sys_menu` <include refid="sysMenuJoins" />
+        <where>
+        </where>
+    </select>
+
+</mapper>

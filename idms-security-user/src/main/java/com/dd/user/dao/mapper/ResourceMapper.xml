@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dd.user.dao.ResourceDao">
+    <resultMap id="resourceResultMap" type="com.dd.base.model.security.SecurityResource">
+        <result column="action" property="action"/>
+        <result column="permission" property="permission"/>
+    </resultMap>
+    <select id="findAllResource" resultMap="resourceResultMap">
+                    SELECT DISTINCT
+                     `action`,
+                     `permission`
+                    FROM
+                      (SELECT
+                        `sys_menu`.`action`,
+                        `sys_role`.`role_code` AS `permission`
+                      FROM
+                        `sys_role`
+                        LEFT JOIN `role_menu`
+                          ON `role_menu`.`role_id` = `sys_role`.`role_id`
+                        LEFT JOIN `sys_menu`
+                          ON `sys_menu`.`menu_id` = `role_menu`.`menu_id`
+                      UNION
+                      SELECT
+                        `sys_menu`.`action`,
+                        `sys_menu`.`permission`
+                      FROM
+                        `sys_menu`) a
+                    WHERE LENGTH(TRIM(a.action)) > 1
+                      AND LENGTH(TRIM(a.permission)) > 1;
+    </select>
+
+</mapper>

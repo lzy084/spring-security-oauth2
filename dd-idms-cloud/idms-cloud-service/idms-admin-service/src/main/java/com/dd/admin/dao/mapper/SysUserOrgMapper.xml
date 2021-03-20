@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dd.admin.dao.SysUserOrgMapper">
+
+    <resultMap id="sysUserOrgResultMap" type="com.dd.model.user.SysUserOrg">
+
+        <id column="orgId" property="orgId"/>
+        <result column="userId" property="userId"/>
+
+    </resultMap>
+
+    <sql id="sysUserOrgColumns">
+        `sys_user_org`.`user_id` AS `userId`,
+        `sys_user_org`.`org_id` AS `orgId`
+    </sql>
+
+    <sql id="sysUserOrgJoins">
+
+    </sql>
+
+    <select id="get" resultMap="sysUserOrgResultMap">
+        SELECT
+        <include refid="sysUserOrgColumns"/>
+        FROM `sys_user_org`
+        <include refid="sysUserOrgJoins"/>
+        <where>
+            `sys_user_org`.`org_id` = #{id}
+        </where>
+    </select>
+
+
+    <select id="findAllList" resultMap="sysUserOrgResultMap">
+        SELECT
+        <include refid="sysUserOrgColumns"/>
+        FROM `sys_user_org`
+        <include refid="sysUserOrgJoins"/>
+        <where>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `sys_user_org`(
+            `user_id`,
+            `org_id`
+        )
+        VALUES (
+            #{userId},
+            #{orgId}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO `sys_user_org`(
+        `user_id`,
+        `org_id`
+        )
+        VALUES
+        <foreach collection="list" item="sysUserOrg" separator=",">
+            (
+            #{sysUserOrg.userId},
+            #{sysUserOrg.orgId}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `sys_user_org`
+        <set>
+            <if test="userId!=null and userId !=''">
+                `user_id` = #{userId},
+            </if>
+
+        </set>
+        WHERE `org_id` = #{orgId}
+    </update>
+
+    <delete id="delete">
+        delete from `sys_user_org`
+        WHERE `org_id` = #{orgId}
+    </delete>
+
+</mapper>

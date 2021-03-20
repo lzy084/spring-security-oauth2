@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dd.cloud.security.model.dao.SecurityRoleMapper">
+
+    <resultMap id="sysRoleResultMap" type=" com.dd.cloud.security.model.entity.SecurityRole">
+        <id column="roleId" property="roleId"/> 
+        <result column="roleName" property="roleName"/> 
+        <result column="roleCode" property="roleCode"/> 
+        <result column="roleType" property="roleType"/>
+    </resultMap>
+    <sql id="sysRoleColumns">
+        `sys_role`.`role_id` AS `roleId`,
+        `sys_role`.`role_name` AS `roleName`,
+        `sys_role`.`role_code` AS `roleCode`,
+        `sys_role`.`role_type` AS `roleType`
+    </sql>
+
+    <sql id="sysRoleJoins">
+        
+    </sql>
+
+</mapper>

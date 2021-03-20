@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dd.admin.dao.SysPositionUserMapper">
+
+    <resultMap id="sysPositionUserResultMap" type="com.dd.model.user.SysPositionUser">
+        <id column="positionId" property="positionId"/>
+        <result column="userId" property="userId"/>
+
+
+    </resultMap>
+
+    <sql id="sysPositionUserColumns">
+        `sys_position_user`.`position_id` AS `positionId`,
+        `sys_position_user`.`user_id` AS `userId`
+    </sql>
+
+    <sql id="sysPositionUserJoins">
+
+    </sql>
+
+    <select id="get" resultMap="sysPositionUserResultMap">
+        SELECT
+        <include refid="sysPositionUserColumns"/>
+        FROM `sys_position_user`
+        <include refid="sysPositionUserJoins"/>
+        <where>
+            `sys_position_user`.`position_id` = #{id}
+        </where>
+    </select>
+
+
+    <select id="findAllList" resultMap="sysPositionUserResultMap">
+        SELECT
+        <include refid="sysPositionUserColumns"/>
+        FROM `sys_position_user`
+        <include refid="sysPositionUserJoins"/>
+        <where>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `sys_position_user`(
+            `position_id`,
+            `user_id`
+        )
+        VALUES (
+            #{positionId},
+            #{userId}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO `sys_position_user`(
+        `position_id`,
+        `user_id`
+        )
+        VALUES
+        <foreach collection="list" item="sysPositionUser" separator=",">
+            (
+            #{sysPositionUser.positionId},
+            #{sysPositionUser.userId}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `sys_position_user`
+        <set>
+            <if test="userId!=null and userId !=''">
+                `user_id` = #{userId}
+            </if>
+        </set>
+        WHERE `position_id` = #{positionId}
+    </update>
+
+    <delete id="delete">
+        delete from `sys_position_user`
+        WHERE `position_id` = #{positionId}
+    </delete>
+
+</mapper>

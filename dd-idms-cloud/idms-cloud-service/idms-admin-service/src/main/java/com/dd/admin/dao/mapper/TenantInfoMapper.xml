@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dd.admin.dao.TenantInfoMapper">
+
+    <resultMap id="tenantInfoResultMap" type="com.dd.model.user.TenantInfo">
+        <id column="tenantId" property="tenantId"/> 
+        <result column="companyName" property="companyName"/> 
+        <result column="address" property="address"/> 
+        <result column="contacts" property="contacts"/> 
+        <result column="tel" property="tel"/> 
+        <result column="fax" property="fax"/> 
+        <result column="status" property="status"/> 
+        <result column="expireDate" property="expireDate"/> 
+        <result column="words" property="words"/> 
+        <result column="domain" property="domain"/> 
+        <result column="mobile" property="mobile"/> 
+        <result column="creator" property="creator"/> 
+        <result column="createDate" property="createDate"/>
+    </resultMap>
+
+    <sql id="tenantInfoColumns">
+        `tenant_info`.`tenant_id` AS `tenantId`,
+        `tenant_info`.`company_name` AS `companyName`,
+        `tenant_info`.`address` AS `address`,
+        `tenant_info`.`contacts` AS `contacts`,
+        `tenant_info`.`tel` AS `tel`,
+        `tenant_info`.`fax` AS `fax`,
+        `tenant_info`.`status` AS `status`,
+        `tenant_info`.`expire_date` AS `expireDate`,
+        `tenant_info`.`words` AS `words`,
+        `tenant_info`.`domain` AS `domain`,
+        `tenant_info`.`mobile` AS `mobile`,
+        `tenant_info`.`creator` AS `creator`,
+        `tenant_info`.`create_date` AS `createDate`
+    </sql>
+
+    <sql id="tenantInfoJoins">
+        
+    </sql>
+
+    <select id="get" resultMap="tenantInfoResultMap">
+        SELECT
+        <include refid="tenantInfoColumns" />
+        FROM `tenant_info` <include refid="tenantInfoJoins" />
+        <where>
+        `tenant_info`.`tenant_id` = #{id}
+        </where>
+    </select>
+
+
+    <select id="findAllList" resultMap="tenantInfoResultMap">
+        SELECT
+        <include refid="tenantInfoColumns" />
+        FROM `tenant_info` <include refid="tenantInfoJoins" />
+        <where>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `tenant_info`(
+            `tenant_id`,
+            `company_name`,
+            `address`,
+            `contacts`,
+            `tel`,
+            `fax`,
+            `status`,
+            `expire_date`,
+            `words`,
+            `domain`,
+            `mobile`,
+            `creator`,
+            `create_date`
+        )
+        VALUES (
+            #{tenantId},
+            #{companyName},
+            #{address},
+            #{contacts},
+            #{tel},
+            #{fax},
+            #{status},
+            #{expireDate},
+            #{words},
+            #{domain},
+            #{mobile},
+            #{creator},
+            #{createDate}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO `tenant_info`(
+            `tenant_id`,
+            `company_name`,
+            `address`,
+            `contacts`,
+            `tel`,
+            `fax`,
+            `status`,
+            `expire_date`,
+            `words`,
+            `domain`,
+            `mobile`,
+            `creator`,
+            `create_date`
+        )
+        VALUES
+        <foreach collection ="list" item="tenantInfo" separator =",">
+        (
+            #{tenantInfo.tenantId},
+            #{tenantInfo.companyName},
+            #{tenantInfo.address},
+            #{tenantInfo.contacts},
+            #{tenantInfo.tel},
+            #{tenantInfo.fax},
+            #{tenantInfo.status},
+            #{tenantInfo.expireDate},
+            #{tenantInfo.words},
+            #{tenantInfo.domain},
+            #{tenantInfo.mobile},
+            #{tenantInfo.creator},
+            #{tenantInfo.createDate}
+        )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `tenant_info`
+        <set>
+                <if test= "companyName!=null and companyName !=''"> 
+         `company_name` = #{companyName},
+        </if>
+        <if test= "address!=null and address !=''"> 
+         `address` = #{address},
+        </if>
+        <if test= "contacts!=null and contacts !=''"> 
+         `contacts` = #{contacts},
+        </if>
+        <if test= "tel!=null and tel !=''"> 
+         `tel` = #{tel},
+        </if>
+        <if test= "fax!=null and fax !=''"> 
+         `fax` = #{fax},
+        </if>
+        <if test= "status!=null and status !=''"> 
+         `status` = #{status},
+        </if>
+        <if test= "expireDate!=null and expireDate !=''"> 
+         `expire_date` = #{expireDate},
+        </if>
+        <if test= "words!=null and words !=''"> 
+         `words` = #{words},
+        </if>
+        <if test= "domain!=null and domain !=''"> 
+         `domain` = #{domain},
+        </if>
+        <if test= "mobile!=null and mobile !=''"> 
+         `mobile` = #{mobile},
+        </if>
+        <if test= "creator!=null and creator !=''"> 
+         `creator` = #{creator},
+        </if>
+        <if test= "createDate!=null and createDate !=''"> 
+         `create_date` = #{createDate}
+        </if>
+      </set>
+        WHERE `tenant_id` = #{tenantId}
+    </update>
+
+    <delete id="delete">
+        delete from `tenant_info`
+        WHERE `tenant_id` = #{tenantId}
+    </delete>
+
+</mapper>

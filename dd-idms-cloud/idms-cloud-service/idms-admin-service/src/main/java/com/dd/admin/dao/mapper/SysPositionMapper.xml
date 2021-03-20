@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dd.admin.dao.SysPositionMapper">
+
+    <resultMap id="sysPositionResultMap" type="com.dd.model.user.SysPosition">
+        <id column="positionId" property="positionId"/> 
+        <result column="positionName" property="positionName"/> 
+        <result column="orgId" property="orgId"/> 
+        <result column="remarks" property="remarks"/> 
+        <result column="tenantId" property="tenantId"/> 
+        <result column="creator" property="creator"/> 
+        <result column="createDate" property="createDate"/> 
+
+        
+        
+    </resultMap>
+
+    <sql id="sysPositionColumns">
+        `sys_position`.`position_id` AS `positionId`,
+        `sys_position`.`position_name` AS `positionName`,
+        `sys_position`.`org_id` AS `orgId`,
+        `sys_position`.`remarks` AS `remarks`,
+        `sys_position`.`tenant_id` AS `tenantId`,
+        `sys_position`.`creator` AS `creator`,
+        `sys_position`.`create_date` AS `createDate`
+    </sql>
+
+    <sql id="sysPositionJoins">
+        
+    </sql>
+
+    <select id="get" resultMap="sysPositionResultMap">
+        SELECT
+        <include refid="sysPositionColumns" />
+        FROM `sys_position` <include refid="sysPositionJoins" />
+        <where>
+        `sys_position`.`position_id` = #{id}
+        </where>
+    </select>
+
+
+    <select id="findAllList" resultMap="sysPositionResultMap">
+        SELECT
+        <include refid="sysPositionColumns" />
+        FROM `sys_position` <include refid="sysPositionJoins" />
+        <where>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `sys_position`(
+            `position_id`,
+            `position_name`,
+            `org_id`,
+            `remarks`,
+            `tenant_id`,
+            `creator`,
+            `create_date`
+        )
+        VALUES (
+            #{positionId},
+            #{positionName},
+            #{orgId},
+            #{remarks},
+            #{tenantId},
+            #{creator},
+            #{createDate}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO `sys_position`(
+            `position_id`,
+            `position_name`,
+            `org_id`,
+            `remarks`,
+            `tenant_id`,
+            `creator`,
+            `create_date`
+        )
+        VALUES
+        <foreach collection ="list" item="sysPosition" separator =",">
+        (
+            #{sysPosition.positionId},
+            #{sysPosition.positionName},
+            #{sysPosition.orgId},
+            #{sysPosition.remarks},
+            #{sysPosition.tenantId},
+            #{sysPosition.creator},
+            #{sysPosition.createDate}
+        )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `sys_position`
+        <set>
+                <if test= "positionName!=null and positionName !=''"> 
+         `position_name` = #{positionName},
+        </if>
+        <if test= "orgId!=null and orgId !=''"> 
+         `org_id` = #{orgId},
+        </if>
+        <if test= "remarks!=null and remarks !=''"> 
+         `remarks` = #{remarks},
+        </if>
+        <if test= "tenantId!=null and tenantId !=''"> 
+         `tenant_id` = #{tenantId},
+        </if>
+        <if test= "creator!=null and creator !=''"> 
+         `creator` = #{creator},
+        </if>
+        <if test= "createDate!=null and createDate !=''"> 
+         `create_date` = #{createDate}
+        </if>
+      </set>
+        WHERE `position_id` = #{positionId}
+    </update>
+
+    <delete id="delete">
+        delete from `sys_position`
+        WHERE `position_id` = #{positionId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dd.admin.dao.SysUserRoleMapper">
+
+    <resultMap id="sysUserRoleResultMap" type="com.dd.model.user.SysUserRole">
+        <id column="roleId" property="roleId"/>
+        <result column="userId" property="userId"/>
+    </resultMap>
+
+    <sql id="sysUserRoleColumns">
+        `sys_user_role`.`user_id` AS `userId`,
+        `sys_user_role`.`role_id` AS `roleId`
+    </sql>
+
+    <sql id="sysUserRoleJoins">
+        
+    </sql>
+
+    <select id="get" resultMap="sysUserRoleResultMap">
+        SELECT
+        <include refid="sysUserRoleColumns" />
+        FROM `sys_user_role` <include refid="sysUserRoleJoins" />
+        <where>
+        `sys_user_role`.`role_id` = #{id}
+        </where>
+    </select>
+
+
+    <select id="findAllList" resultMap="sysUserRoleResultMap">
+        SELECT
+        <include refid="sysUserRoleColumns" />
+        FROM `sys_user_role` <include refid="sysUserRoleJoins" />
+        <where>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `sys_user_role`(
+            `user_id`,
+            `role_id`
+        )
+        VALUES (
+            #{userId},
+            #{roleId}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO `sys_user_role`(
+            `user_id`,
+            `role_id`
+        )
+        VALUES
+        <foreach collection ="list" item="sysUserRole" separator =",">
+        (
+            #{sysUserRole.userId},
+            #{sysUserRole.roleId}
+        )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `sys_user_role`
+        <set>
+        <if test= "userId!=null and userId !=''"> 
+         `user_id` = #{userId},
+        </if>
+       
+      </set>
+        WHERE `role_id` = #{roleId}
+    </update>
+
+    <delete id="delete">
+        delete from `sys_user_role`
+        WHERE `role_id` = #{roleId}
+    </delete>
+
+</mapper>

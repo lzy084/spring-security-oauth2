@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dd.admin.dao.SysAccountMapper">
+
+    <resultMap id="sysAccountResultMap" type="com.dd.model.user.SysAccount">
+        <id column="accountId" property="accountId"/>
+        <result column="userId" property="userId"/>
+        <result column="accountType" property="accountType"/>
+        <result column="accountName" property="accountName"/>
+        <result column="accountPwd" property="accountPwd"/>
+        <result column="tenantId" property="tenantId"/>
+        <result column="status" property="status"/>
+        <result column="loginCount" property="loginCount"/>
+        <result column="locked" property="locked"/>
+        <result column="loginIp" property="loginIp"/>
+        <result column="lastLogin" property="lastLogin"/>
+        <result column="domain" property="domain"/>
+        <result column="creator" property="creator"/>
+        <result column="createDate" property="createDate"/>
+    </resultMap>
+
+    <sql id="sysAccountColumns">
+        `sys_account`.`account_id` AS `accountId`,
+        `sys_account`.`user_id` AS `userId`,
+        `sys_account`.`account_type` AS `accountType`,
+        `sys_account`.`account_name` AS `accountName`,
+        `sys_account`.`account_pwd` AS `accountPwd`,
+        `sys_account`.`tenant_id` AS `tenantId`,
+        `sys_account`.`status` AS `status`,
+        `sys_account`.`login_count` AS `loginCount`,
+        `sys_account`.`locked` AS `locked`,
+        `sys_account`.`login_ip` AS `loginIp`,
+        `sys_account`.`last_login` AS `lastLogin`,
+        `sys_account`.`domain` AS `domain`,
+        `sys_account`.`creator` AS `creator`,
+        `sys_account`.`create_date` AS `createDate`
+    </sql>
+
+    <sql id="sysAccountJoins">
+
+    </sql>
+
+    <select id="get" resultMap="sysAccountResultMap">
+        SELECT
+        <include refid="sysAccountColumns"/>
+        FROM `sys_account`
+        <include refid="sysAccountJoins"/>
+        <where>
+            `sys_account`.`account_id` = #{id}
+        </where>
+    </select>
+
+
+    <select id="findAllList" resultMap="sysAccountResultMap">
+        SELECT
+        <include refid="sysAccountColumns"/>
+        FROM `sys_account`
+        <include refid="sysAccountJoins"/>
+        <where>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `sys_account`(
+            `account_id`,
+            `user_id`,
+            `account_type`,
+            `account_name`,
+            `account_pwd`,
+            `tenant_id`,
+            `status`,
+            `login_count`,
+            `locked`,
+            `login_ip`,
+            `last_login`,
+            `domain`,
+            `creator`,
+            `create_date`
+        )
+        VALUES (
+            #{accountId},
+            #{userId},
+            #{accountType},
+            #{accountName},
+            #{accountPwd},
+            #{tenantId},
+            #{status},
+            #{loginCount},
+            #{locked},
+            #{loginIp},
+            #{lastLogin},
+            #{domain},
+            #{creator},
+            #{createDate}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO `sys_account`(
+        `account_id`,
+        `user_id`,
+        `account_type`,
+        `account_name`,
+        `account_pwd`,
+        `tenant_id`,
+        `status`,
+        `login_count`,
+        `locked`,
+        `login_ip`,
+        `last_login`,
+        `domain`,
+        `creator`,
+        `create_date`
+        )
+        VALUES
+        <foreach collection="list" item="sysAccount" separator=",">
+            (
+            #{sysAccount.accountId},
+            #{sysAccount.userId},
+            #{sysAccount.accountType},
+            #{sysAccount.accountName},
+            #{sysAccount.accountPwd},
+            #{sysAccount.tenantId},
+            #{sysAccount.status},
+            #{sysAccount.loginCount},
+            #{sysAccount.locked},
+            #{sysAccount.loginIp},
+            #{sysAccount.lastLogin},
+            #{sysAccount.domain},
+            #{sysAccount.creator},
+            #{sysAccount.createDate}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `sys_account`
+        <set>
+            <if test="userId!=null and userId !=''">
+                `user_id` = #{userId},
+            </if>
+            <if test="accountType!=null and accountType !=''">
+                `account_type` = #{accountType},
+            </if>
+            <if test="accountName!=null and accountName !=''">
+                `account_name` = #{accountName},
+            </if>
+            <if test="accountPwd!=null and accountPwd !=''">
+                `account_pwd` = #{accountPwd},
+            </if>
+            <if test="tenantId!=null and tenantId !=''">
+                `tenant_id` = #{tenantId},
+            </if>
+            <if test="status!=null and status !=''">
+                `status` = #{status},
+            </if>
+            <if test="loginCount!=null and loginCount !=''">
+                `login_count` = #{loginCount},
+            </if>
+            <if test="locked!=null and locked !=''">
+                `locked` = #{locked},
+            </if>
+            <if test="loginIp!=null and loginIp !=''">
+                `login_ip` = #{loginIp},
+            </if>
+            <if test="lastLogin!=null and lastLogin !=''">
+                `last_login` = #{lastLogin},
+            </if>
+            <if test="domain!=null and domain !=''">
+                `domain` = #{domain},
+            </if>
+            <if test="creator!=null and creator !=''">
+                `creator` = #{creator},
+            </if>
+            <if test="createDate!=null and createDate !=''">
+                `create_date` = #{createDate}
+            </if>
+        </set>
+        WHERE `account_id` = #{accountId}
+    </update>
+
+    <delete id="delete">
+        delete from `sys_account`
+        WHERE `account_id` = #{accountId}
+    </delete>
+
+</mapper>

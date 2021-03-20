@@ -1,0 +1,41 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.0.130:8001/eureka,http://192.168.0.130:8002/eureka
+#  instance:
+#   instance-id: 192.168.1.5:8010
+#    spring:
+#      cloud:
+#        inetutils:
+#          ignored-interfaces: VMware Virtual Ethernet Adapter for VMnet8,VMware Virtual Ethernet Adapter for VMnet1
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: admin-service
+          uri: lb://admin-service
+          predicates:
+            - Path=/admin/**
+          filters:
+            - StripPrefix= 1
+            - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/fallback
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/order/**
+          filters:
+            - StripPrefix= 1
+            - name: Hystrix
+              args:
+                name: fallbackcmd
+                fallbackUri: forward:/fallback
+      discovery:
+        locator:
+          lower-case-service-id: true
+          enabled: true
+    loadbalancer:
+      ribbon:
+        enabled: false

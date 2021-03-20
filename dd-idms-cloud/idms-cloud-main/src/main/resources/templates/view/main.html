@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="view/shard/head::head(~{})">
+    <meta charset="UTF-8">
+    <title>首页</title>
+</head>
+<body>
+</body>
+<footer th:replace="view/shard/foot::foot(~{::script})">
+    <script type="text/javascript" th:inline="javascript">
+           $(document).ready(function () {
+               $("#btnTest").bind("click",function () {
+                      $.get(ctxPath+"menu/1",function (result) {
+                           console.log(result);
+                      });
+               })
+           })
+    </script>
+</footer>
+
+</html>

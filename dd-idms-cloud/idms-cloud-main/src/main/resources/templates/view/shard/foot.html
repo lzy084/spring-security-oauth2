@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<footer th:fragment="foot(script)">
+    <script type="text/javascript" th:src="@{/lib/jquery-3.4.1/jquery-3.4.1.min.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{/lib/layui-v2.5.5/layui.js}" charset="utf-8"></script>
+
+    <script type="text/javascript" th:src="@{/lib/bootstrap-table/bootstrap-table.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:src="@{/lib/bootstrap-table/locale/bootstrap-table-zh-CN.js}" charset="utf-8"></script>
+    <script type="text/javascript" th:inline="javascript">
+        layui.use(['layer','form'], function () {
+            var   layer = layui.layer;
+            var   form=layui.form;
+        });
+
+        /*<![CDATA[*/
+        ctxPath = /*[[@{/}]]*/ '';
+        /*]]>*/
+    </script>
+    <script type="text/javascript" th:inline="javascript" th:src="@{/js/lay-config.js}" charset="utf-8"></script>
+    <th:block th:replace="${script}"></th:block>
+</footer>
+</html>

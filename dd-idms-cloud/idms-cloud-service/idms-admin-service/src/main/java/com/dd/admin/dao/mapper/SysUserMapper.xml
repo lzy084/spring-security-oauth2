@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dd.admin.dao.SysUserMapper">
+
+    <resultMap id="sysUserResultMap" type="com.dd.model.user.SysUser">
+        <id column="userId" property="userId"/> 
+        <result column="userNo" property="userNo"/> 
+        <result column="userName" property="userName"/> 
+        <result column="email" property="email"/> 
+        <result column="phone" property="phone"/> 
+        <result column="photo" property="photo"/> 
+        <result column="remarks" property="remarks"/> 
+        <result column="currentAddress" property="currentAddress"/> 
+        <result column="residentAddress" property="residentAddress"/> 
+        <result column="nation" property="nation"/> 
+        <result column="politicalStatus" property="politicalStatus"/> 
+        <result column="graduateInstitutions" property="graduateInstitutions"/> 
+        <result column="birthday" property="birthday"/> 
+        <result column="cardNo" property="cardNo"/> 
+        <result column="marriageStatus" property="marriageStatus"/> 
+        <result column="entryDate" property="entryDate"/> 
+        <result column="dimissionDate" property="dimissionDate"/> 
+        <result column="education" property="education"/> 
+        <result column="gender" property="gender"/> 
+        <result column="nativePlace" property="nativePlace"/> 
+        <result column="duty" property="duty"/> 
+        <result column="positionId" property="positionId"/> 
+        <result column="openBank" property="openBank"/> 
+        <result column="openBankAddress" property="openBankAddress"/> 
+        <result column="openBankNumber" property="openBankNumber"/> 
+        <result column="deleted" property="deleted"/> 
+        <result column="tenantId" property="tenantId"/> 
+        <result column="professionalRanks" property="professionalRanks"/> 
+        <result column="userType" property="userType"/> 
+        <result column="residentType" property="residentType"/> 
+        <result column="lastDimissionDate" property="lastDimissionDate"/> 
+        <result column="clientId" property="clientId"/> 
+        <result column="sort" property="sort"/> 
+        <result column="creator" property="creator"/> 
+        <result column="createDate" property="createDate"/> 
+
+        
+        
+    </resultMap>
+
+    <sql id="sysUserColumns">
+        `sys_user`.`user_id` AS `userId`,
+        `sys_user`.`user_no` AS `userNo`,
+        `sys_user`.`user_name` AS `userName`,
+        `sys_user`.`email` AS `email`,
+        `sys_user`.`phone` AS `phone`,
+        `sys_user`.`photo` AS `photo`,
+        `sys_user`.`remarks` AS `remarks`,
+        `sys_user`.`current_address` AS `currentAddress`,
+        `sys_user`.`resident_address` AS `residentAddress`,
+        `sys_user`.`nation` AS `nation`,
+        `sys_user`.`political_status` AS `politicalStatus`,
+        `sys_user`.`graduate_institutions` AS `graduateInstitutions`,
+        `sys_user`.`birthday` AS `birthday`,
+        `sys_user`.`card_no` AS `cardNo`,
+        `sys_user`.`marriage_status` AS `marriageStatus`,
+        `sys_user`.`entry_date` AS `entryDate`,
+        `sys_user`.`dimission_date` AS `dimissionDate`,
+        `sys_user`.`education` AS `education`,
+        `sys_user`.`gender` AS `gender`,
+        `sys_user`.`native_place` AS `nativePlace`,
+        `sys_user`.`duty` AS `duty`,
+        `sys_user`.`position_id` AS `positionId`,
+        `sys_user`.`open_bank` AS `openBank`,
+        `sys_user`.`open_bank_address` AS `openBankAddress`,
+        `sys_user`.`open_bank_number` AS `openBankNumber`,
+        `sys_user`.`deleted` AS `deleted`,
+        `sys_user`.`tenant_id` AS `tenantId`,
+        `sys_user`.`professional_ranks` AS `professionalRanks`,
+        `sys_user`.`user_type` AS `userType`,
+        `sys_user`.`resident_type` AS `residentType`,
+        `sys_user`.`last_dimission_date` AS `lastDimissionDate`,
+        `sys_user`.`client_id` AS `clientId`,
+        `sys_user`.`sort` AS `sort`,
+        `sys_user`.`creator` AS `creator`,
+        `sys_user`.`create_date` AS `createDate`
+    </sql>
+
+    <sql id="sysUserJoins">
+        
+    </sql>
+
+    <select id="get" resultMap="sysUserResultMap">
+        SELECT
+        <include refid="sysUserColumns" />
+        FROM `sys_user` <include refid="sysUserJoins" />
+        <where>
+        `sys_user`.`user_id` = #{id}
+        </where>
+    </select>
+
+
+    <select id="findAllList" resultMap="sysUserResultMap">
+        SELECT
+        <include refid="sysUserColumns" />
+        FROM `sys_user` <include refid="sysUserJoins" />
+        <where>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `sys_user`(
+            `user_id`,
+            `user_no`,
+            `user_name`,
+            `email`,
+            `phone`,
+            `photo`,
+            `remarks`,
+            `current_address`,
+            `resident_address`,
+            `nation`,
+            `political_status`,
+            `graduate_institutions`,
+            `birthday`,
+            `card_no`,
+            `marriage_status`,
+            `entry_date`,
+            `dimission_date`,
+            `education`,
+            `gender`,
+            `native_place`,
+            `duty`,
+            `position_id`,
+            `open_bank`,
+            `open_bank_address`,
+            `open_bank_number`,
+            `deleted`,
+            `tenant_id`,
+            `professional_ranks`,
+            `user_type`,
+            `resident_type`,
+            `last_dimission_date`,
+            `client_id`,
+            `sort`,
+            `creator`,
+            `create_date`
+        )
+        VALUES (
+            #{userId},
+            #{userNo},
+            #{userName},
+            #{email},
+            #{phone},
+            #{photo},
+            #{remarks},
+            #{currentAddress},
+            #{residentAddress},
+            #{nation},
+            #{politicalStatus},
+            #{graduateInstitutions},
+            #{birthday},
+            #{cardNo},
+            #{marriageStatus},
+            #{entryDate},
+            #{dimissionDate},
+            #{education},
+            #{gender},
+            #{nativePlace},
+            #{duty},
+            #{positionId},
+            #{openBank},
+            #{openBankAddress},
+            #{openBankNumber},
+            #{deleted},
+            #{tenantId},
+            #{professionalRanks},
+            #{userType},
+            #{residentType},
+            #{lastDimissionDate},
+            #{clientId},
+            #{sort},
+            #{creator},
+            #{createDate}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO `sys_user`(
+            `user_id`,
+            `user_no`,
+            `user_name`,
+            `email`,
+            `phone`,
+            `photo`,
+            `remarks`,
+            `current_address`,
+            `resident_address`,
+            `nation`,
+            `political_status`,
+            `graduate_institutions`,
+            `birthday`,
+            `card_no`,
+            `marriage_status`,
+            `entry_date`,
+            `dimission_date`,
+            `education`,
+            `gender`,
+            `native_place`,
+            `duty`,
+            `position_id`,
+            `open_bank`,
+            `open_bank_address`,
+            `open_bank_number`,
+            `deleted`,
+            `tenant_id`,
+            `professional_ranks`,
+            `user_type`,
+            `resident_type`,
+            `last_dimission_date`,
+            `client_id`,
+            `sort`,
+            `creator`,
+            `create_date`
+        )
+        VALUES
+        <foreach collection ="list" item="sysUser" separator =",">
+        (
+            #{sysUser.userId},
+            #{sysUser.userNo},
+            #{sysUser.userName},
+            #{sysUser.email},
+            #{sysUser.phone},
+            #{sysUser.photo},
+            #{sysUser.remarks},
+            #{sysUser.currentAddress},
+            #{sysUser.residentAddress},
+            #{sysUser.nation},
+            #{sysUser.politicalStatus},
+            #{sysUser.graduateInstitutions},
+            #{sysUser.birthday},
+            #{sysUser.cardNo},
+            #{sysUser.marriageStatus},
+            #{sysUser.entryDate},
+            #{sysUser.dimissionDate},
+            #{sysUser.education},
+            #{sysUser.gender},
+            #{sysUser.nativePlace},
+            #{sysUser.duty},
+            #{sysUser.positionId},
+            #{sysUser.openBank},
+            #{sysUser.openBankAddress},
+            #{sysUser.openBankNumber},
+            #{sysUser.deleted},
+            #{sysUser.tenantId},
+            #{sysUser.professionalRanks},
+            #{sysUser.userType},
+            #{sysUser.residentType},
+            #{sysUser.lastDimissionDate},
+            #{sysUser.clientId},
+            #{sysUser.sort},
+            #{sysUser.creator},
+            #{sysUser.createDate}
+        )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `sys_user`
+        <set>
+                <if test= "userNo!=null and userNo !=''"> 
+         `user_no` = #{userNo},
+        </if>
+        <if test= "userName!=null and userName !=''"> 
+         `user_name` = #{userName},
+        </if>
+        <if test= "email!=null and email !=''"> 
+         `email` = #{email},
+        </if>
+        <if test= "phone!=null and phone !=''"> 
+         `phone` = #{phone},
+        </if>
+        <if test= "photo!=null and photo !=''"> 
+         `photo` = #{photo},
+        </if>
+        <if test= "remarks!=null and remarks !=''"> 
+         `remarks` = #{remarks},
+        </if>
+        <if test= "currentAddress!=null and currentAddress !=''"> 
+         `current_address` = #{currentAddress},
+        </if>
+        <if test= "residentAddress!=null and residentAddress !=''"> 
+         `resident_address` = #{residentAddress},
+        </if>
+        <if test= "nation!=null and nation !=''"> 
+         `nation` = #{nation},
+        </if>
+        <if test= "politicalStatus!=null and politicalStatus !=''"> 
+         `political_status` = #{politicalStatus},
+        </if>
+        <if test= "graduateInstitutions!=null and graduateInstitutions !=''"> 
+         `graduate_institutions` = #{graduateInstitutions},
+        </if>
+        <if test= "birthday!=null and birthday !=''"> 
+         `birthday` = #{birthday},
+        </if>
+        <if test= "cardNo!=null and cardNo !=''"> 
+         `card_no` = #{cardNo},
+        </if>
+        <if test= "marriageStatus!=null and marriageStatus !=''"> 
+         `marriage_status` = #{marriageStatus},
+        </if>
+        <if test= "entryDate!=null and entryDate !=''"> 
+         `entry_date` = #{entryDate},
+        </if>
+        <if test= "dimissionDate!=null and dimissionDate !=''"> 
+         `dimission_date` = #{dimissionDate},
+        </if>
+        <if test= "education!=null and education !=''"> 
+         `education` = #{education},
+        </if>
+        <if test= "gender!=null and gender !=''"> 
+         `gender` = #{gender},
+        </if>
+        <if test= "nativePlace!=null and nativePlace !=''"> 
+         `native_place` = #{nativePlace},
+        </if>
+        <if test= "duty!=null and duty !=''"> 
+         `duty` = #{duty},
+        </if>
+        <if test= "positionId!=null and positionId !=''"> 
+         `position_id` = #{positionId},
+        </if>
+        <if test= "openBank!=null and openBank !=''"> 
+         `open_bank` = #{openBank},
+        </if>
+        <if test= "openBankAddress!=null and openBankAddress !=''"> 
+         `open_bank_address` = #{openBankAddress},
+        </if>
+        <if test= "openBankNumber!=null and openBankNumber !=''"> 
+         `open_bank_number` = #{openBankNumber},
+        </if>
+        <if test= "deleted!=null and deleted !=''"> 
+         `deleted` = #{deleted},
+        </if>
+        <if test= "tenantId!=null and tenantId !=''"> 
+         `tenant_id` = #{tenantId},
+        </if>
+        <if test= "professionalRanks!=null and professionalRanks !=''"> 
+         `professional_ranks` = #{professionalRanks},
+        </if>
+        <if test= "userType!=null and userType !=''"> 
+         `user_type` = #{userType},
+        </if>
+        <if test= "residentType!=null and residentType !=''"> 
+         `resident_type` = #{residentType},
+        </if>
+        <if test= "lastDimissionDate!=null and lastDimissionDate !=''"> 
+         `last_dimission_date` = #{lastDimissionDate},
+        </if>
+        <if test= "clientId!=null and clientId !=''"> 
+         `client_id` = #{clientId},
+        </if>
+        <if test= "sort!=null and sort !=''"> 
+         `sort` = #{sort},
+        </if>
+        <if test= "creator!=null and creator !=''"> 
+         `creator` = #{creator},
+        </if>
+        <if test= "createDate!=null and createDate !=''"> 
+         `create_date` = #{createDate}
+        </if>
+      </set>
+        WHERE `user_id` = #{userId}
+    </update>
+
+    <delete id="delete">
+        delete from `sys_user`
+        WHERE `user_id` = #{userId}
+    </delete>
+
+</mapper>

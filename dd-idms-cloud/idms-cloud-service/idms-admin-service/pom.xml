@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <groupId>com.dd.service</groupId>
+    <artifactId>idms-cloud-service</artifactId>
+    <version>1.0</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>idms-admin-service</artifactId>
+
+  <name>idms-admin-service</name>
+  <!-- FIXME change it to the project's website -->
+  <url>http://www.example.com</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.dd.model</groupId>
+      <artifactId>idms-user-model</artifactId>
+      <version>1.1</version>
+    </dependency>
+    <dependency>
+      <groupId>com.dd.cloud</groupId>
+      <artifactId>idms-resource-security</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.dd.cloud</groupId>
+      <artifactId>idms-cloud-conf</artifactId>
+      <version>1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-oauth2-core</artifactId>
+      <version>5.3.2.RELEASE</version>
+    </dependency>
+    <!--    <dependency>-->
+<!--      <groupId>com.dd.model</groupId>-->
+<!--      <artifactId>idms-cloud-user</artifactId>-->
+<!--      <version>1.1</version>-->
+<!--    </dependency>-->
+
+
+    <!--    <dependency>-->
+<!--      <groupId>org.springframework.security</groupId>-->
+<!--      <artifactId>spring-security-oauth2-core</artifactId>-->
+<!--      <version>5.3.2.RELEASE</version>-->
+<!--    </dependency>-->
+  </dependencies>
+  <repositories>
+    <repository>
+      <id>dd-maven</id>
+      <url>http://192.168.0.130:8081/repository/dd-maven/</url>
+      <name>dd maven</name>
+    </repository>
+  </repositories>
+
+  <build>
+  </build>
+</project>

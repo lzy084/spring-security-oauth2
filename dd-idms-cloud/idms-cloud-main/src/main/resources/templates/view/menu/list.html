@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head th:replace="view/shard/head::head(~{::link})">
+        <link th:href="@{/static/lib/jquerytree/css/jquery.treegrid.css}" type="text/css"  rel="stylesheet">
+        <link th:href="@{/static/lib/bootstrap-table/bootstrap-table.min.css}" type="text/css" rel="stylesheet">
+
+<!--        <link type="text/css" rel="stylesheet" th:href="@{/lib/jquerytree/css/jquery.treegrid.css}">-->
+        <meta charset="UTF-8">
+        <title>title</title>
+    </head>
+
+    <body>
+        <div class="layuimini-container">
+            <div class="layuimini-main">
+
+                <fieldset class="table-search-fieldset">
+                    <legend>搜索信息</legend>
+                    <div style="margin: 10px 10px 10px 10px">
+                        <form class="layui-form layui-form-pane" action="">
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">用户姓名</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="username" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">用户性别</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="sex" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">用户城市</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="city" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">用户职业</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="classify" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <button type="submit" class="layui-btn layui-btn-primary" lay-submit
+                                            lay-filter="data-search-btn">
+                                        <i class="layui-icon"></i>
+                                        搜 索
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </fieldset>
+                <div class="row mag-b-10">
+                    <button id="btnAdd" class="layui-btn layui-btn-normal layui-btn-34"><i class="fa fa-plus fa-fw"></i>&nbsp;新建
+                    </button>
+                    <button id="btnEdit" sec:authorize='hasRole("ROLE_ADMIN")'
+                            class="layui-btn layui-btn-warm layui-btn-34"><i
+                            class="fa fa-pencil fa-fw"></i>&nbsp;编辑
+                    </button>
+                    <button id="btnDelete" sec:authorize='hasRole("ROLE_ADMIN")'
+                            class="layui-btn layui-btn-danger layui-btn-34"><i
+                            class="fa fa-close fa-fw"></i>&nbsp;删除
+                    </button>
+                </div>
+                <table th:fragment="dataTable" id="table" class="table table-bordered db-col-12"></table>
+            </div>
+        </div>
+
+        <footer th:replace="view/shard/foot::foot(~{::script})">
+
+            <script type="text/javascript" th:src="@{/static/lib/jquerytree/js/jquery.treegrid.js}"></script>
+            <script type="text/javascript" th:src="@{/static/lib/bootstrap-table/bootstrap-table.js}"></script>
+            <script type="text/javascript" th:src="@{/static/lib/bootstrap-table/extensions/treegrid/bootstrap-table-treegrid.min.js}"></script>
+            <script type="text/javascript" th:inline="javascript">
+                var menuList = [[${menuList}]];
+                $(document).ready(function () {
+                    // console.log(menuList);
+                    intTable(JSON.parse(menuList));
+                    // console.log(JSON.parse(menuList));
+                })
+
+                function intTable(data) {
+                    $('#table').bootstrapTable({
+                        pageNumber: 1,//初始化第一页
+                        showExport: false,//导出
+                        showPaginationSwitch: false,//显示/隐藏分页
+                        pageList: [10, 25, 50, 100],//每页行数
+                        showColumns: false,//内容下拉
+                        pagination: false,//分页
+                        pageSize: 10,//每页行数
+                        search: false,//启用搜索
+                        cache: true,//是否使用缓存
+                        dataType: "json",
+                        striped: true,
+                        data: data,
+                        idField: 'id',
+                        sidePagination: 'server',
+                        columns: [{
+                            field: 'title',
+                            title: '菜单名称',
+                            width: 100,
+                            align: 'left'
+                        }, {
+                            field: 'href',
+                            title: 'Action',
+                            width: 80,
+                            align: 'left'
+                        }, {
+                            field: 'id',
+                            title: 'ID',
+                            width: 40,
+                            visible: false
+                        },
+                            {
+                                field: 'type',
+                                title: '菜单类型',
+                                width: 40,
+                                align: 'left',
+                                formatter: "typeFormatter"
+                            },
+                            {
+                                field: 'icon',
+                                title: '图标',
+                                width: 40,
+                                align: 'left'
+                            },
+                            {
+                                field: 'parentId',
+                                title: '父ID',
+                                width: 80,
+                                visible: false
+                            },
+                            {
+                                field: 'parentIds',
+                                title: '父ID',
+                                width: 80,
+                                visible: false
+                            },
+                            {
+                                field: "operation",
+                                title: "操作",
+                                align: "left",
+                                width: 50,
+                                formatter: "optionFormatter"
+                            }],
+                        treeShowField: 'title',
+                        parentIdField: 'parentId',
+                        rootParentId: 0,
+                        onResetView: function () {
+                            $('#table').treegrid({
+                                initialState: 'collapsed',//expanded
+                                treeColumn: 0, //0
+                                onChange: function () {
+                                   $('#table').bootstrapTable('resetWidth');
+                                }
+                            });
+                        }
+                    });
+                }
+
+                function optionFormatter(value, row, index) {
+                    var _id = row.id;
+                    var _name = row.title;
+                    var html = '<a href="#" class="layui-btn layui-btn-xs layui-btn-info" title="新建" style="" onclick="rowAdd(\'' + _id + '\',\'' + _name + '\')"><i class="layui-icon" style="margin-right: 0;">&#xe654;</i></a>';
+                    html += '<a href="#" class="layui-btn layui-btn-xs layui-btn-warm" title="修改" style="" onclick="rowModify(\'' + _id + '\')"><i class="layui-icon" style="margin-right: 0;">&#xe642;</i></a>';
+                    html += '<a href="#" class="layui-btn layui-btn-xs layui-btn-danger" title="刪除" style="" onclick="rowDelete(\'' + _id + '\')"><i class="layui-icon" style="margin-right: 0;">&#xe640;</i></a>';
+                    return html;
+                }
+                function typeFormatter(value, row, index) {
+                    if (value === 1) {
+                        return "菜单";
+                    }
+                    if (value === 2) {
+                        return "按钮";
+                    }
+                    if (value === 3) {
+                        return "首页";
+                    }
+                    if (value === 4) {
+                        return "logon";
+                    }
+                }
+                $("#btnAdd").on("click",function () {
+                    rowAdd('','');
+                })
+                function rowModify(id) {
+                    var index = layer.open({
+                        title: '添加菜单',
+                        type: 2,
+                        shade: 0.2,
+                        maxmin:true,
+                        shadeClose: true,
+                        area: ['100%', '100%'],
+                        content: ctxPath+"menu/edit/"+id,
+                    });
+                    layer.full(index);
+                    $(window).on("resize", function () {
+                        layer.full(index);
+                    });
+                }
+                function rowAdd(id,name) {
+                    var index = layer.open({
+                        title: '添加菜单',
+                        type: 2,
+                        shade: 0.2,
+                        maxmin:true,
+                        shadeClose: true,
+                        area: ['100%', '100%'],
+                        content: ctxPath+"menu/add?id="+id+"&name="+name,
+                    });
+                    layer.full(index);
+                    $(window).on("resize", function () {
+                        layer.full(index);
+                    });
+                }
+            </script>
+        </footer>
+    </body>
+</html>

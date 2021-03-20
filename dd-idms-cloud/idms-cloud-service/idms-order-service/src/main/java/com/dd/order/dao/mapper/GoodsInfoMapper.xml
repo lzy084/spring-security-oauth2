@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dd.order.dao.GoodsInfoMapper">
+    <resultMap id="goodsInfoResultMap" type="com.dd.order.entity.GoodsInfo">
+        <id column="goodsId" property="goodsId"/>
+        <result column="goodsName" property="goodsName"/>
+        <result column="goodsNum" property="goodsNum"/>
+    </resultMap>
+
+    <sql id="goodsInfoColumns">
+
+                `goods_info`.`goods_id` AS `goodsId`,
+                `goods_info`.`goods_name` AS `goodsName`,
+                `goods_info`.`goods_num` AS `goodsNum`
+
+    </sql>
+
+    <sql id="goodsInfoJoins">
+    </sql>
+
+    <select id="get" resultMap="goodsInfoResultMap">
+        SELECT
+        <include refid="goodsInfoColumns"/>
+        FROM `goods_info`
+        <include refid="goodsInfoJoins"/>
+        <where>
+            `goods_info`.`goods_id` = #{id}
+        </where>
+    </select>
+
+
+    <select id="findAllList" resultMap="goodsInfoResultMap">
+        SELECT
+        <include refid="goodsInfoColumns"/>
+        FROM `goods_info`
+        <include refid="goodsInfoJoins"/>
+        <where>
+        </where>
+    </select>
+
+    <insert id="insert">
+
+                INSERT INTO `goods_info`(
+                    `goods_name`,
+                    `goods_num`
+                )
+                VALUES (
+                    #{goodsName},
+                    #{goodsNum}
+                )
+
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO `goods_info`(
+        `goods_name`,
+        `goods_num`
+        )
+        VALUES
+        <foreach collection="list" item="goodsInfo" separator=",">
+            (
+            #{goodsInfo.goodsName},
+            #{goodsInfo.goodsNum}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `goods_info`
+        <set>
+            <if test="goodsName!=null and goodsName !=''">
+                `goods_name` = #{goodsName},
+            </if>
+            <if test="goodsNum!=null and goodsNum !=''">
+                `goods_num` = #{goodsNum}
+            </if>
+        </set>
+        WHERE `goods_id` = #{goodsId}
+    </update>
+
+    <delete id="delete">
+
+                delete from `goods_info`
+                WHERE `goods_id` = #{goodsId}
+
+    </delete>
+    <select id="queryStoreById" resultType="java.lang.Integer">
+         select `goods_num` from `goods_info`  WHERE `goods_id` = #{id} ;
+    </select>
+    <update id="reduceStore">
+        UPDATE `goods_info`
+        <set>
+            `goods_num` = #{num}
+        </set>
+        WHERE `goods_id` = #{id}
+    </update>
+</mapper>

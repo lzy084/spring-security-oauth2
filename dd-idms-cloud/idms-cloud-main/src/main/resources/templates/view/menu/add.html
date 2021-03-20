@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+    <head th:replace="view/shard/head::head(~{})">
+        <meta charset="UTF-8">
+        <title>title</title>
+    </head>
+
+    <body>
+        <div class="layuimini-container">
+            <div class="layui-form layuimini-form" style="margin-top: 10px">
+                <div class="layuimini-container">
+                    <div class="layuimini-main">
+                        <div class="layui-form layuimini-form">
+                            <div class="layui-form-item  layui-row">
+                                <div class="layui-col-xs3">
+                                    <label class="layui-form-label layui-form-label-x1 required"><label
+                                            style="color: red">*</label>菜单名称
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input lay-verify="required" lay-reqtext="菜单名称不能为空" type="text" name="title"
+                                               autocomplete="off" class="layui-input layui-input-7">
+                                    </div>
+                                </div>
+                                <div class="layui-col-xs3">
+                                    <label class="layui-form-label layui-form-label-x1 required"><label
+                                            style="color: red">*</label>上级菜单
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input lay-verify="required" lay-reqtext="角色名不能为空" type="text" name="parentName"
+                                            th:value="${menuName}"   autocomplete="off" class="layui-input layui-input-7">
+                                        <input th:value="${parentId}" type="hidden" name="parentId">
+                                    </div>
+                                </div>
+                                <div class="layui-col-xs3">
+                                    <label class="layui-form-label-x1 layui-form-label required"><label
+                                            style="color: red">*</label>ACTION
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input lay-verify="required" lay-reqtext="角色名不能为空" type="text" name="action"
+                                               autocomplete="off" class="layui-input layui-input-7">
+                                    </div>
+                                </div>
+                                <div class="layui-col-xs3">
+                                    <label class="layui-form-label required">路径
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input lay-verify="required" lay-reqtext="角色名不能为空" type="text" name="path"
+                                               autocomplete="off" class="layui-input layui-input-7">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item  layui-row">
+                                <div class="layui-col-xs3">
+                                    <label class="layui-form-label layui-form-label-x1 required"><label
+                                            style="color: red">*</label>菜单类型
+                                    </label>
+                                    <div class="layui-input-block" style="width:57%">
+                                        <select name="type">
+                                            <option value=0 selected="">菜单</option>
+                                            <option value=1>按钮</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-col-xs3">
+                                    <label class="layui-form-label layui-form-label-x1 required"><label
+                                            style="color: red">*</label>排序
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input lay-verify="required" lay-reqtext="角色名不能为空" type="text" name="sort"
+                                               autocomplete="off" class="layui-input layui-input-7">
+                                    </div>
+                                </div>
+                                <div class="layui-col-xs3">
+                                    <label class="layui-form-label-x1 layui-form-label required"><label
+                                            style="color: red">*</label>权限
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input lay-verify="required" lay-reqtext="角色名不能为空" type="text" name="permission"
+                                               autocomplete="off" class="layui-input layui-input-7">
+                                    </div>
+                                </div>
+                                <div class="layui-col-xs3">
+                                    <label class="layui-form-label required">图标
+                                    </label>
+                                    <div class="layui-input-block">
+                                        <input lay-verify="required" lay-reqtext="角色名不能为空" type="text" name="icon"
+                                               autocomplete="off" class="layui-input layui-input-7">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="float: right;margin-right: 15px;margin-top: 15px">
+                        <button class="layui-btn layui-btn-normal layui-btn-34" lay-submit lay-filter="saveBtn">提交
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <footer th:replace="view/shard/foot::foot(~{::script})">
+            <script type="text/javascript" th:inline="javascript">
+            </script>
+        </footer>
+    </body>
+</html>

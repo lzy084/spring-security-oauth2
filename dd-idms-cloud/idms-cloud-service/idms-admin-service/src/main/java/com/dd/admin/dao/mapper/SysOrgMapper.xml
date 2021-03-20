@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dd.admin.dao.SysOrgMapper">
+
+    <resultMap id="sysOrgResultMap" type="com.dd.model.user.SysOrg">
+        <id column="orgId" property="orgId"/> 
+        <result column="parentId" property="parentId"/> 
+        <result column="parentIds" property="parentIds"/> 
+        <result column="orgName" property="orgName"/> 
+        <result column="orgSort" property="orgSort"/> 
+        <result column="area" property="area"/> 
+        <result column="orgCode" property="orgCode"/> 
+        <result column="orgType" property="orgType"/> 
+        <result column="address" property="address"/> 
+        <result column="zipCode" property="zipCode"/> 
+        <result column="phone" property="phone"/> 
+        <result column="fax" property="fax"/> 
+        <result column="email" property="email"/> 
+        <result column="masterPerson" property="masterPerson"/> 
+        <result column="deputyPerson" property="deputyPerson"/> 
+        <result column="remarks" property="remarks"/> 
+        <result column="tenantId" property="tenantId"/> 
+        <result column="creator" property="creator"/> 
+        <result column="createDate" property="createDate"/> 
+
+        
+        
+    </resultMap>
+
+    <sql id="sysOrgColumns">
+        `sys_org`.`org_id` AS `orgId`,
+        `sys_org`.`parent_id` AS `parentId`,
+        `sys_org`.`parent_ids` AS `parentIds`,
+        `sys_org`.`org_name` AS `orgName`,
+        `sys_org`.`org_sort` AS `orgSort`,
+        `sys_org`.`area` AS `area`,
+        `sys_org`.`org_code` AS `orgCode`,
+        `sys_org`.`org_type` AS `orgType`,
+        `sys_org`.`address` AS `address`,
+        `sys_org`.`zip_code` AS `zipCode`,
+        `sys_org`.`phone` AS `phone`,
+        `sys_org`.`fax` AS `fax`,
+        `sys_org`.`email` AS `email`,
+        `sys_org`.`master_person` AS `masterPerson`,
+        `sys_org`.`deputy_person` AS `deputyPerson`,
+        `sys_org`.`remarks` AS `remarks`,
+        `sys_org`.`tenant_id` AS `tenantId`,
+        `sys_org`.`creator` AS `creator`,
+        `sys_org`.`create_date` AS `createDate`
+    </sql>
+
+    <sql id="sysOrgJoins">
+        
+    </sql>
+
+    <select id="get" resultMap="sysOrgResultMap">
+        SELECT
+        <include refid="sysOrgColumns" />
+        FROM `sys_org` <include refid="sysOrgJoins" />
+        <where>
+        `sys_org`.`org_id` = #{id}
+        </where>
+    </select>
+
+
+    <select id="findAllList" resultMap="sysOrgResultMap">
+        SELECT
+        <include refid="sysOrgColumns" />
+        FROM `sys_org` <include refid="sysOrgJoins" />
+        <where>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `sys_org`(
+            `org_id`,
+            `parent_id`,
+            `parent_ids`,
+            `org_name`,
+            `org_sort`,
+            `area`,
+            `org_code`,
+            `org_type`,
+            `address`,
+            `zip_code`,
+            `phone`,
+            `fax`,
+            `email`,
+            `master_person`,
+            `deputy_person`,
+            `remarks`,
+            `tenant_id`,
+            `creator`,
+            `create_date`
+        )
+        VALUES (
+            #{orgId},
+            #{parentId},
+            #{parentIds},
+            #{orgName},
+            #{orgSort},
+            #{area},
+            #{orgCode},
+            #{orgType},
+            #{address},
+            #{zipCode},
+            #{phone},
+            #{fax},
+            #{email},
+            #{masterPerson},
+            #{deputyPerson},
+            #{remarks},
+            #{tenantId},
+            #{creator},
+            #{createDate}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO `sys_org`(
+            `org_id`,
+            `parent_id`,
+            `parent_ids`,
+            `org_name`,
+            `org_sort`,
+            `area`,
+            `org_code`,
+            `org_type`,
+            `address`,
+            `zip_code`,
+            `phone`,
+            `fax`,
+            `email`,
+            `master_person`,
+            `deputy_person`,
+            `remarks`,
+            `tenant_id`,
+            `creator`,
+            `create_date`
+        )
+        VALUES
+        <foreach collection ="list" item="sysOrg" separator =",">
+        (
+            #{sysOrg.orgId},
+            #{sysOrg.parentId},
+            #{sysOrg.parentIds},
+            #{sysOrg.orgName},
+            #{sysOrg.orgSort},
+            #{sysOrg.area},
+            #{sysOrg.orgCode},
+            #{sysOrg.orgType},
+            #{sysOrg.address},
+            #{sysOrg.zipCode},
+            #{sysOrg.phone},
+            #{sysOrg.fax},
+            #{sysOrg.email},
+            #{sysOrg.masterPerson},
+            #{sysOrg.deputyPerson},
+            #{sysOrg.remarks},
+            #{sysOrg.tenantId},
+            #{sysOrg.creator},
+            #{sysOrg.createDate}
+        )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `sys_org`
+        <set>
+                <if test= "parentId!=null and parentId !=''"> 
+         `parent_id` = #{parentId},
+        </if>
+        <if test= "parentIds!=null and parentIds !=''"> 
+         `parent_ids` = #{parentIds},
+        </if>
+        <if test= "orgName!=null and orgName !=''"> 
+         `org_name` = #{orgName},
+        </if>
+        <if test= "orgSort!=null and orgSort !=''"> 
+         `org_sort` = #{orgSort},
+        </if>
+        <if test= "area!=null and area !=''"> 
+         `area` = #{area},
+        </if>
+        <if test= "orgCode!=null and orgCode !=''"> 
+         `org_code` = #{orgCode},
+        </if>
+        <if test= "orgType!=null and orgType !=''"> 
+         `org_type` = #{orgType},
+        </if>
+        <if test= "address!=null and address !=''"> 
+         `address` = #{address},
+        </if>
+        <if test= "zipCode!=null and zipCode !=''"> 
+         `zip_code` = #{zipCode},
+        </if>
+        <if test= "phone!=null and phone !=''"> 
+         `phone` = #{phone},
+        </if>
+        <if test= "fax!=null and fax !=''"> 
+         `fax` = #{fax},
+        </if>
+        <if test= "email!=null and email !=''"> 
+         `email` = #{email},
+        </if>
+        <if test= "masterPerson!=null and masterPerson !=''"> 
+         `master_person` = #{masterPerson},
+        </if>
+        <if test= "deputyPerson!=null and deputyPerson !=''"> 
+         `deputy_person` = #{deputyPerson},
+        </if>
+        <if test= "remarks!=null and remarks !=''"> 
+         `remarks` = #{remarks},
+        </if>
+        <if test= "tenantId!=null and tenantId !=''"> 
+         `tenant_id` = #{tenantId},
+        </if>
+        <if test= "creator!=null and creator !=''"> 
+         `creator` = #{creator},
+        </if>
+        <if test= "createDate!=null and createDate !=''"> 
+         `create_date` = #{createDate}
+        </if>
+      </set>
+        WHERE `org_id` = #{orgId}
+    </update>
+
+    <delete id="delete">
+        delete from `sys_org`
+        WHERE `org_id` = #{orgId}
+    </delete>
+
+</mapper>

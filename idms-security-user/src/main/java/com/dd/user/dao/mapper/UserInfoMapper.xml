@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dd.user.dao.UserInfoDao">
+    <resultMap id="sysUserResultMap" type="com.dd.user.entity.UserInfo">
+        <id column="userId" property="userId"/>
+        <result column="userNo" property="userNo"/>
+        <result column="realName" property="realName"/>
+        <result column="userName" property="userName"/>
+        <result column="password" property="password"/>
+        <result column="email" property="email"/>
+        <result column="phone" property="phone"/>
+        <result column="gender" property="gender"/>
+        <result column="deleted" property="deleted"/>
+        <collection property="roleList" ofType="com.dd.user.entity.Role" column="userId" select="com.dd.user.dao.SysUserRoleDao.findRoleListByUserId"></collection>
+    </resultMap>
+    <sql id="sysUserColumns">
+        `sys_user`.`user_id` AS `userId`,
+        `sys_user`.`user_no` AS `userNo`,
+        `sys_user`.`real_name` AS `realName`,
+        `sys_user`.`user_name` AS `userName`,
+        `sys_user`.`password` AS `password`,
+        `sys_user`.`email` AS `email`,
+        `sys_user`.`phone` AS `phone`,
+        `sys_user`.`gender` AS `gender`,
+        `sys_user`.`deleted` AS `deleted`
+    </sql>
+
+    <sql id="sysUserJoins">
+
+    </sql>
+
+    <select id="get" resultMap="sysUserResultMap">
+        SELECT
+        <include refid="sysUserColumns"/>
+        FROM `sys_user`
+        <include refid="sysUserJoins"/>
+        <where>
+            `sys_user`.`user_no` = #{id}
+        </where>
+    </select>
+    <select id="findByUserName" resultMap="sysUserResultMap">
+        SELECT
+        <include refid="sysUserColumns"/>
+        FROM `sys_user`
+        <include refid="sysUserJoins"/>
+        <where>
+            `sys_user`.`user_no` = #{userName}
+        </where>
+    </select>
+    <select id="findAllList" resultMap="sysUserResultMap">
+        SELECT
+        <include refid="sysUserColumns"/>
+        FROM `sys_user`
+        <include refid="sysUserJoins"/>
+        <where>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `sys_user`(
+            `user_no`,
+            `real_name`,
+            `user_name`,
+            `password`,
+            `email`,
+            `phone`,
+            `gender`,
+            `deleted`
+        )
+        VALUES (
+            #{userNo},
+            #{realName},
+            #{userName},
+            #{password},
+            #{email},
+            #{phone},
+            #{gender},
+            #{deleted}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO `sys_user`(
+        `user_no`,
+        `real_name`,
+        `user_name`,
+        `password`,
+        `email`,
+        `phone`,
+        `gender`,
+        `deleted`
+        )
+        VALUES
+        <foreach collection="list" item="sysUser" separator=",">
+            (
+            #{sysUser.userNo},
+            #{sysUser.realName},
+            #{sysUser.userName},
+            #{sysUser.password},
+            #{sysUser.email},
+            #{sysUser.phone},
+            #{sysUser.gender},
+            #{sysUser.deleted}
+            )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `sys_user`
+        <set>
+            <if test="userNo!=null and userNo !=''">
+                `user_no` = #{userNo},
+            </if>
+            <if test="realName!=null and realName !=''">
+                `real_name` = #{realName},
+            </if>
+            <if test="userName!=null and userName !=''">
+                `user_name` = #{userName},
+            </if>
+            <if test="password!=null and password !=''">
+                `password` = #{password},
+            </if>
+            <if test="email!=null and email !=''">
+                `email` = #{email},
+            </if>
+            <if test="phone!=null and phone !=''">
+                `phone` = #{phone},
+            </if>
+            <if test="gender!=null and gender !=''">
+                `gender` = #{gender},
+            </if>
+            <if test="deleted!=null and deleted !=''">
+                `deleted` = #{deleted}
+            </if>
+        </set>
+        WHERE `user_id` = #{userId}
+    </update>
+
+    <delete id="delete">
+        delete from `sys_user`
+        WHERE `user_id` = #{userId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dd.admin.dao.SysDictValueMapper">
+
+    <resultMap id="sysDictValueResultMap" type="com.dd.model.user.SysDictValue">
+        <id column="id" property="id"/> 
+        <result column="typeId" property="typeId"/> 
+        <result column="label" property="label"/> 
+        <result column="value" property="value"/> 
+        <result column="sort" property="sort"/> 
+
+        
+        
+    </resultMap>
+
+    <sql id="sysDictValueColumns">
+        `sys_dict_value`.`id` AS `id`,
+        `sys_dict_value`.`type_id` AS `typeId`,
+        `sys_dict_value`.`label` AS `label`,
+        `sys_dict_value`.`value` AS `value`,
+        `sys_dict_value`.`sort` AS `sort`
+    </sql>
+
+    <sql id="sysDictValueJoins">
+        
+    </sql>
+
+    <select id="get" resultMap="sysDictValueResultMap">
+        SELECT
+        <include refid="sysDictValueColumns" />
+        FROM `sys_dict_value` <include refid="sysDictValueJoins" />
+        <where>
+        `sys_dict_value`.`id` = #{id}
+        </where>
+    </select>
+
+
+    <select id="findAllList" resultMap="sysDictValueResultMap">
+        SELECT
+        <include refid="sysDictValueColumns" />
+        FROM `sys_dict_value` <include refid="sysDictValueJoins" />
+        <where>
+        </where>
+    </select>
+
+    <insert id="insert">
+        INSERT INTO `sys_dict_value`(
+            `id`,
+            `type_id`,
+            `label`,
+            `value`,
+            `sort`
+        )
+        VALUES (
+            #{id},
+            #{typeId},
+            #{label},
+            #{value},
+            #{sort}
+        )
+    </insert>
+
+    <insert id="insertBatch">
+        INSERT INTO `sys_dict_value`(
+            `id`,
+            `type_id`,
+            `label`,
+            `value`,
+            `sort`
+        )
+        VALUES
+        <foreach collection ="list" item="sysDictValue" separator =",">
+        (
+            #{sysDictValue.id},
+            #{sysDictValue.typeId},
+            #{sysDictValue.label},
+            #{sysDictValue.value},
+            #{sysDictValue.sort}
+        )
+        </foreach>
+    </insert>
+
+    <update id="update">
+        UPDATE `sys_dict_value`
+        <set>
+                <if test= "typeId!=null and typeId !=''"> 
+         `type_id` = #{typeId},
+        </if>
+        <if test= "label!=null and label !=''"> 
+         `label` = #{label},
+        </if>
+        <if test= "value!=null and value !=''"> 
+         `value` = #{value},
+        </if>
+        <if test= "sort!=null and sort !=''"> 
+         `sort` = #{sort}
+        </if>
+      </set>
+        WHERE `id` = #{id}
+    </update>
+
+    <delete id="delete">
+        delete from `sys_dict_value`
+        WHERE `id` = #{id}
+    </delete>
+
+</mapper>

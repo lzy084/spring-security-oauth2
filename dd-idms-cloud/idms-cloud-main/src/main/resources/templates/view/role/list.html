@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="view/shard/head::head(~{})">
+    <meta charset="UTF-8">
+    <title>角色列表</title>
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+
+<!--        <fieldset class="table-search-fieldset">-->
+<!--            <legend>搜索信息</legend>-->
+<!--            <div style="margin: 10px 10px 10px 10px">-->
+<!--                <form class="layui-form layui-form-pane" action="">-->
+<!--                    <div class="layui-form-item">-->
+<!--                        <div class="layui-inline">-->
+<!--                            <label class="layui-form-label">用户姓名</label>-->
+<!--                            <div class="layui-input-inline">-->
+<!--                                <input type="text" name="username" autocomplete="off" class="layui-input">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="layui-inline">-->
+<!--                            <label class="layui-form-label">用户性别</label>-->
+<!--                            <div class="layui-input-inline">-->
+<!--                                <input type="text" name="sex" autocomplete="off" class="layui-input">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="layui-inline">-->
+<!--                            <label class="layui-form-label">用户城市</label>-->
+<!--                            <div class="layui-input-inline">-->
+<!--                                <input type="text" name="city" autocomplete="off" class="layui-input">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="layui-inline">-->
+<!--                            <label class="layui-form-label">用户职业</label>-->
+<!--                            <div class="layui-input-inline">-->
+<!--                                <input type="text" name="classify" autocomplete="off" class="layui-input">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="layui-inline">-->
+<!--                            <button type="submit" class="layui-btn layui-btn-primary"  lay-submit lay-filter="data-search-btn"><i class="layui-icon"></i> 搜 索</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </form>-->
+<!--            </div>-->
+<!--        </fieldset>-->
+        <div class="row mag-b-10">
+            <button id="btnAdd" class="layui-btn layui-btn-normal layui-btn-34"><i class="fa fa-plus fa-fw"></i>&nbsp;新建
+            </button>
+<!--            <button id="btnEdit" sec:authorize='hasRole("ROLE_ADMIN")' class="layui-btn layui-btn-warm layui-btn-34"><i-->
+<!--                    class="fa fa-pencil fa-fw"></i>&nbsp;编辑-->
+<!--            </button>-->
+<!--            <button id="btnDelete" sec:authorize='hasRole("ROLE_ADMIN")' class="layui-btn layui-btn-danger layui-btn-34"><i-->
+<!--                    class="fa fa-close fa-fw"></i>&nbsp;删除-->
+<!--            </button>-->
+        </div>
+            <table th:fragment="dataTable" id="table" class="table table-bordered db-col-12">
+                <thead>
+                <tr>
+                    <th align="2%">序号</th>
+                    <th width="15%">名称</th>
+                    <th>代码</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody id="sampleBody">
+                <tr th:if="*{#lists.isEmpty(roleList)}">
+                    <td style="text-align: center" colspan="4">没有数据</td>
+                </tr>
+                <tr th:if="*{Not #lists.isEmpty(roleList)}" th:each="role,stat:${roleList}">
+                    <td th:text="${stat.index+1}"></td>
+                    <td th:text="${role.roleName}"></td>
+                    <td th:text="${role.roleCode}"></td>
+                    <td>
+                        <button th:onclick="edit([[${role.roleId}]]);"
+                                class="layui-btn layui-btn-xs layui-btn-warm">
+                            <i title="修改" class="layui-icon" style="margin-right: 0;">&#xe642;</i>
+                        </button>
+                        <button th:onclick="del([[${role.roleId}]]);"
+                                class='layui-btn layui-btn-xs layui-btn-danger'>
+                            <i title="删除" class="layui-icon" style="margin-right: 0;">&#xe640;</i>
+                        </button>
+                        <button th:onclick="addUser([[${role.roleId}]],[[${role.roleName}]])" class="layui-btn layui-btn-xs layui-btn-normal">
+                            <i title="添加用户" class="layui-icon" style="margin-right: 0;">&#xe66f;</i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+<!--        </div>-->
+
+
+    </div>
+</div>
+<footer th:replace="view/shard/foot::foot(~{::script})">
+    <script type="text/javascript" th:inline="javascript">
+        function refresh(){
+            $("#table").load(ctxPath + "role/refresh");
+        }
+
+        $("#btnAdd").on("click",function () {
+            console.log("ctxPath",ctxPath);
+            var index = layer.open({
+                title: '添加角色',
+                type: 2,
+                shade: 0.2,
+                maxmin:false,
+                shadeClose: true,
+                area: [($(window).width() * 0.50) + 'px', ($(window).height() * 0.25) + 'px'],
+                content: ctxPath+"role/add",
+            });
+
+        })
+        function del(id) {
+            $.ajax({
+                type:"post",
+                url:ctxPath+"role/del/"+id,
+                success:function (result) {
+                  if(result.success){
+                      layer.msg(result.message,{icon:1});
+                      refresh();
+                  }
+                }
+            })
+        }
+        function edit(id) {
+            var index = layer.open({
+                title: '编辑',
+                type: 2,
+                shade: 0.2,
+                maxmin:false,
+                shadeClose: true,
+                area: [($(window).width() * 0.50) + 'px', ($(window).height() * 0.25) + 'px'],
+                content: ctxPath+"role/"+id+"/edit"
+            });
+        }
+    </script>
+</footer>
+</body>
+</html>
